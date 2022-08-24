@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>주택연금 예상월지급금 조회</title>
+
+<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/nanumgothic.css">
+<style>
+html {
+  font-size: 16px;
+}
+body {
+  background-color: #fbfbfd;
+  font-family: '나눔고딕',NanumGothic,'돋움',Dotum,Helvetica,sans-serif;
+}
+.btn_login_wrap {margin:0;}
+.btn_login {
+  display:block;width:150px;padding:13px 0 13px;
+  border:solid 1px rgba(0,0,0,.15);background-color:#036635;box-sizing:border-box;padding:13px 0;border-radius:5.4px
+}
+.btn_text {
+  font-size:20px;font-weight:700;line-height:24px;color:#fbfbfd;letter-spacing:-.5px
+}
+
+.jfk_textinput{border-radius:1px;border:1px solid #d9d9d9;border-top:1px solid #c0c0c0;font-size:13px;height:25px;padding:1px 8px}
+.jfk_textinput:focus{box-shadow:inset 0 1px 2px rgba(0,0,0,.3);border:1px solid #4d90fe;outline:none}
+.label_req{font-size:13px;line-height:25px;}
+
+
+.flex-header {
+  display: flex;
+  justify-content: left;
+  flex-flow: column;
+  background-color: #fbfbfd;
+  margin: 0px;
+  padding-top: 3em;
+  padding-bottom: 2em;
+  padding-left: 68px;
+}
+.flex-header > div {
+  margin-bottom: 0.7em;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.flex_input {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  background-color: white;
+  margin: 0 0.5em;
+  padding: 2em 0;
+
+  border-radius: 8px;
+  box-shadow: 2px 2px 20px 0 rgba(0,0,0,0.04);
+}
+
+.flex_input > div {
+  margin: 0 3em 1em;
+}
+
+.flex_input_2 {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0.5em;
+  padding: 2em;
+}
+@media only screen and (min-width: 992px) {
+  .flex_input_2 {
+    padding-left: 3em;
+  }
+}
+
+.preference {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  margin-bottom: 0.7em;
+}
+@media only screen and (min-width: 992px) {
+  .preference {
+    width: 20em;
+  }
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  background-color: #fbfbfd;
+  margin: 0px;
+  padding: 5px;
+}
+.flex-container > div {
+  flex: 0 1 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0.5em;
+  padding: 1em;
+  text-align: left;
+  font-size: 1em;
+
+  background: #fff;
+  box-shadow: 2px 2px 20px 0 rgba(0,0,0,0.04);
+  overflow: auto;
+}
+@media only screen and (min-width: 992px) {
+  .flex-container > div {
+    flex: 0 1 20em;
+  }
+}
+.flex-container > div:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+.flex-container > div > p {
+  font-size: 1.4em;
+}
+.flex-container > div > div {
+  font-size: 0.9em;
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+}
+.cont {
+  max-width: 100%;
+  line-height: 1.4em
+}
+
+.select {
+    padding: 0;
+}
+.select input[type=radio]{
+    display: none;
+}
+.select input[type=radio]+label{
+    display: inline-block;
+    cursor: pointer;
+    height: 24px;
+    width: 60px;
+    border: 1px solid #333;
+    line-height: 24px;
+    text-align: center;
+    font-weight:bold;
+    font-size:13px;
+}
+.select input[type=radio]+label{
+    background-color: #fff;
+    color: #333;
+}
+.select input[type=radio]:checked+label{
+    background-color: #333;
+    color: #fff;
+}
+.checks {
+    position: relative;
+    height: 20px;
+    padding: 0;
+    line-height: 20px;
+}
+.checks label {
+    font-weight:bold;
+    font-size:13px;
+    margin-right: 10px;
+    vertical-align: middle;
+}            
+.checks input[type="radio"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+.checks input[type="radio"]+label {
+    display: inline-block;
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+}
+.checks input[type="radio"]+label:before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0px;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #cacece;
+    border-radius: 100%;
+    box-shadow: none;
+}
+.checks input[type="radio"]:checked+label:before {
+    background: #333;
+    border-color: #333;
+} 
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js"></script>
+<script>
+
+var dd;
+var zloanYm;
+
+function getRadioButtonValue(varName) {
+  const radioButtons = document.querySelectorAll('input[name=' + varName +']');
+  let selectedValue;
+  for (const radioButton of radioButtons) {
+    if (radioButton.checked) {
+      selectedValue = radioButton.value;
+      break;
+    }
+  }
+  return selectedValue;
+}        
+
+function getList() {
+
+  var board1 = document.getElementById("board1");
+  board1.innerHTML = "";
+  document.getElementById("board1").style = "background-color: #31d8d0;";
+  
+  var items = [];
+  
+  fetch("http://apis.data.go.kr/B551408/rg-mon-pmt-amt/pmt-info"
+        + "?serviceKey=PW2VvwTvkcs%2FWMVLduXzeRL0BPjOYH%2B0wMnsQiyy5UgcrukEjAurATJUNkeA7T%2Bj47s3GAmLzHduip%2BfbxESlQ%3D%3D"
+	   + "&pageNo=1"
+	   + "&numOfRows=10"
+        + "&houseDvcd=01&pnsnPayMthdDvcd=01&mmPayAmtIndcDvcd=01&joinPersBrthDy=19610101&sposBrthDy=19610605&payTermCd=01&wdrwLmtSetpAmt=0&dataType=JSON"
+        + "&housePrc=" + housePrc.value.replaceAll(",", "")
+       )
+    .then(r => r.json())
+    .then(d => {
+
+        dd = d;
+	   items.push(d.body.item);
+
+/*
+{
+  "header": {
+    "resultCode": "00",
+    "resultMsg": "정상"
+  },
+  "body": {
+    "item": {
+      "monPmtAmt": "220980",
+      "lminAmt": "0",
+      "lmaxAmt": "21150000"
+    },
+    "pageNo": 1,
+    "totalCount": 1,
+    "numOfRows": 10
+  }
+}
+*/
+        
+        var rcmdCmt = document.getElementById("rcmdCmt");
+        if(items.length == 0) {
+          rcmdCmt.innerHTML = "조회 결과가 없습니다..";
+        } else {
+          rcmdCmt.innerHTML = items.length + " 건이 조회되었습니다.";
+        }
+        
+        items.forEach(element => {
+        
+            var e = document.createElement('div');
+            board1.append(e);
+            
+            var e1 = document.createElement('p');
+            e1.innerHTML = "상품";
+            e.append(e1);
+			
+            var e20 = document.createElement('div');
+            e20.innerHTML = "추천순위: " + element.prorRnk;
+            e.append(e20);
+            
+            var e21 = document.createElement('div');
+            e21.innerHTML = "보증구분코드: " + element.grntDvcd;
+            e.append(e21);
+
+            var e22 = document.createElement('div');
+            e22.innerHTML = "보증한도금액: " + $.number(element.grntLmtAmt);
+            e.append(e22);
+
+            var e23 = document.createElement('div');
+            e23.innerHTML = "예상월지급금: " + $.number(element.monPmtAmt);
+            e.append(e23);
+            
+            var e24 = document.createElement('div');
+            e24.className = "cont";
+            e24.innerHTML = element.cont1.replaceAll("\n", "<br>");;
+            e.append(e24);
+            
+        });
+        document.getElementById("board1").style = "background-color: #fbfbfd;";
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  document.getElementById("button1").addEventListener("click", function() {
+    getList();
+  });
+  document.getElementById("input_area").addEventListener('keydown', (e) => {
+    if(e.key == "Enter") {
+      document.getElementById("button1").click(); 
+    }
+  });
+  $('#housePrc').number(true, 0);
+  $('#age').number(true, 0);
+  document.getElementById("housePrc").focus();
+});
+
+</script>
+</head>
+<body id="body1">
+
+<div id="board0" class="flex-header">
+    <div>주택연금 예상월지급금 조회</div>
+</div>
+
+<div class="flex_input" id="input_area">
+  <div class="preference">
+    <label for="housePrc" class="label_req">주택가격 (housePrc)</label>
+    <input type="text" id="housePrc" name="housePrc" maxlength="20" size="20" class="jfk_textinput" style="text-align: end;">
+  </div>
+  <div class="preference">
+    <label for="age" class="label_req">만 나이 (age)</label>
+    <input type="text" id="age" name="age" maxlength="3" size="20" class="jfk_textinput" style="text-align: end;">
+  </div>
+</div>
+
+<div class="flex_input_2">
+  <div id="rcmdCmt">
+  주택연금 예상월지급금을 조회합니다.
+  </div>
+  <div class="btn_login_wrap">
+    <button class="btn_login" id="button1">
+      <span class="btn_text">조회</span>
+    </button>
+  </div>
+</div>
+
+<div id="board1" class="flex-container">
+</div>
+
+<div id="div1" class="flex-header">
+이 웹페이지는 프로토타입입니다.
+</div>
+
+</body></html>

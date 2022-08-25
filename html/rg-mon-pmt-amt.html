@@ -29,7 +29,6 @@ body {
 @media only screen and (min-width: 992px) {
   .flex_header {
     padding-left: 3em;
-    padding-left: 68px;
     text-align: start;
   }
 }
@@ -51,7 +50,6 @@ body {
 @media only screen and (min-width: 992px) {
   .flex_footer {
     padding-left: 3em;
-    padding-left: 68px;
   }
 }
 .flex_footer > div {
@@ -231,13 +229,32 @@ body {
     border-color: #333;
 } 
 
+.title {
+  vertical-align: middle;
+  color: #333;
+  font-size: 1.286em;
+  line-height: 24px;
+}
+.title:hover {
+    color: #2775c4;
+    text-decoration: underline;
+}
+
+.publicDataDesc {
+  margin: 1em 0;
+  
+}
+
+a {
+  text-decoration: none;
+}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js"></script>
 <script>
 
-var dd;
-var zloanYm;
+let dd;
 
 function getRadioButtonValue(varName) {
   const radioButtons = document.querySelectorAll('input[name=' + varName +']');
@@ -249,57 +266,139 @@ function getRadioButtonValue(varName) {
     }
   }
   return selectedValue;
-}        
+}
 
-function getList() {
+function getCnt() {
 
-  var board1 = document.getElementById("board1");
+   let rcmdCmt = document.getElementById("rcmdCmt");
+   if(items.length == 0) {
+     rcmdCmt.innerHTML = "조회 결과가 없습니다.";
+   } else {
+     rcmdCmt.innerHTML = items.length + " 건이 조회되었습니다.";
+   }
+}
+
+let apiStr = ""
+     + "?serviceKey=PW2VvwTvkcs%2FWMVLduXzeRL0BPjOYH%2B0wMnsQiyy5UgcrukEjAurATJUNkeA7T%2Bj47s3GAmLzHduip%2BfbxESlQ%3D%3D"
+     + "&pageNo=1"
+     + "&numOfRows=10"
+     + "&dataType=JSON"
+	;
+
+let items = [];
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function getList() {
+
+  let board1 = document.getElementById("board1");
   board1.innerHTML = "";
-  
-  var items = [];
+  rcmdCmt.innerHTML = "";
+  items = [];
   
   fetch("http://apis.data.go.kr/B551408/rg-mon-pmt-amt/pmt-info"
-        + "?serviceKey=PW2VvwTvkcs%2FWMVLduXzeRL0BPjOYH%2B0wMnsQiyy5UgcrukEjAurATJUNkeA7T%2Bj47s3GAmLzHduip%2BfbxESlQ%3D%3D"
-	   + "&pageNo=1"
-	   + "&numOfRows=10"
-        + "&houseDvcd=01"
-	   + "&pnsnPayMthdDvcd=01"
-	   + "&mmPayAmtIndcDvcd=01"
-	   + "&joinPersBrthDy=19610101"
-	   + "&sposBrthDy=19610605"
-	   + "&payTermCd=01"
-	   + "&wdrwLmtSetpAmt=0"
-	   + "&dataType=JSON"
-        + "&housePrc=" + housePrc.value.replaceAll(",", "")
-       )
+     + apiStr
+     + "&wdrwLmtSetpAmt=0"
+     + "&houseDvcd=01"
+     + "&pnsnPayMthdDvcd=01"
+     + "&mmPayAmtIndcDvcd=01"
+     + "&joinPersBrthDy=19610101"
+     + "&sposBrthDy=19610605"
+     + "&payTermCd=01"
+     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     )
     .then(r => r.json())
     .then(d => {
 
         dd = d;
-	   items.push(d.body.item);
-
-        var rcmdCmt = document.getElementById("rcmdCmt");
-        if(items.length == 0) {
-          rcmdCmt.innerHTML = "조회 결과가 없습니다.";
-        } else {
-          rcmdCmt.innerHTML = items.length + " 건이 조회되었습니다.";
-        }
+        items.push(d.body.item);
+	   getCnt();
         
-        items.forEach(element => {
+        let element = d.body.item;
         
-            var e = document.createElement('div');
-            board1.append(e);
+        let e = document.createElement('div');
+        board1.append(e);
             
-            var e1 = document.createElement('p');
-            e1.innerHTML = "종신지급방식 정액형";
-            e.append(e1);
-			
-            var e23 = document.createElement('div');
-            e23.innerHTML = "예상월지급금: " + $.number(element.monPmtAmt);
-            e.append(e23);
+        let e1 = document.createElement('p');
+        e1.innerHTML = "종신지급방식 정액형";
+        e.append(e1);
+      
+        let e23 = document.createElement('div');
+        e23.innerHTML = "예상월지급금: " + $.number(element.monPmtAmt);
+        e.append(e23);
             
-        });
     });
+
+  await new Promise(r => setTimeout(r, 500));
+  fetch("http://apis.data.go.kr/B551408/rg-mon-pmt-amt/pmt-info"
+     + apiStr
+     + "&wdrwLmtSetpAmt=0"
+     + "&houseDvcd=01"
+     + "&pnsnPayMthdDvcd=01"
+     + "&mmPayAmtIndcDvcd=41" // 초기증액형(10년)
+     + "&joinPersBrthDy=19610101"
+     + "&sposBrthDy=19610605"
+     + "&payTermCd=01"
+     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     )
+    .then(r => r.json())
+    .then(d => {
+
+        dd = d;
+        items.push(d.body.item);
+	   getCnt();
+        
+        let element = d.body.item;
+        
+        let e = document.createElement('div');
+        board1.append(e);
+            
+        let e1 = document.createElement('p');
+        e1.innerHTML = "종신지급방식 초기증액형(10년)";
+        e.append(e1);
+      
+        let e23 = document.createElement('div');
+        e23.innerHTML = "예상월지급금: " + $.number(element.monPmtAmt);
+        e.append(e23);
+            
+    });
+
+  await new Promise(r => setTimeout(r, 500));
+  fetch("http://apis.data.go.kr/B551408/rg-mon-pmt-amt/pmt-info"
+     + apiStr
+     + "&wdrwLmtSetpAmt=0"
+     + "&houseDvcd=01"
+     + "&pnsnPayMthdDvcd=01"
+     + "&mmPayAmtIndcDvcd=44" // 초기증액형(3년)
+     + "&joinPersBrthDy=19610101"
+     + "&sposBrthDy=19610605"
+     + "&payTermCd=01"
+     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     )
+    .then(r => r.json())
+    .then(d => {
+
+        dd = d;
+        items.push(d.body.item);
+	   getCnt();
+        
+        let element = d.body.item;
+        
+        let e = document.createElement('div');
+        board1.append(e);
+            
+        let e1 = document.createElement('p');
+        e1.innerHTML = "종신지급방식 초기증액형(3년)";
+        e.append(e1);
+      
+        let e23 = document.createElement('div');
+        e23.innerHTML = "예상월지급금: " + $.number(element.monPmtAmt);
+        e.append(e23);
+            
+    });
+    
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {
@@ -353,7 +452,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 </div>
 
 <div id="div2" class="flex_footer">
-이 웹페이지는 프로토타입입니다.
+  <dl>
+    <dt>
+      <a href="https://data.go.kr/data/15082043/openapi.do" target="_blank">
+        <span class="title">
+          한국주택금융공사_주택연금예상연금조회 오픈 API
+        </span>
+      </a>
+    </dt>
+    <dd class="publicDataDesc">
+      한국주택금융공사에서 제공하는 주택연금에 대한 예상 월지급금, 최대인출한도 등의 정보를 조회할 수 있는 서비스
+    </dd>
+  </dl>
 </div>
 
 </body></html>

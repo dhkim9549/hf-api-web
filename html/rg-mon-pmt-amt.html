@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>주택연금 예상월지급금 조회</title>
 
-<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/nanumgothic.css">
 <style>
 html {
   font-size: 16px;
@@ -13,7 +12,7 @@ html {
 }
 body {
   background-color: #fbfbfd;
-  font-family: '나눔고딕',NanumGothic,'돋움',Dotum,Helvetica,sans-serif;
+  font-family: 'Malgun Gothic', '맑은 고딕', Dotum, '돋움', sans-serif;
 }
 
 .flex_header {
@@ -22,19 +21,19 @@ body {
   flex-flow: column;
   background-color: #fbfbfd;
   margin: 0px;
-  padding-top: 3em;
-  padding-bottom: 2em;
+  padding-top: 48px;
+  padding-bottom: 32px;
   text-align: center;
 }
 @media only screen and (min-width: 992px) {
   .flex_header {
-    padding-left: 3em;
+    padding-left: 48px;
     text-align: start;
   }
 }
 .flex_header > div {
-  margin-bottom: 0.7em;
-  font-size: 1.5em;
+  margin-bottom: 11px;
+  font-size: 24px;
   font-weight: bold;
 }
 
@@ -43,13 +42,13 @@ body {
   justify-content: left;
   flex-flow: column;
   background-color: #fbfbfd;
-  margin-top: 2em;
-  padding: 1em;
+  margin-top: 32px;
+  padding: 16px;
   text-align: start;
 }
 @media only screen and (min-width: 992px) {
   .flex_footer {
-    padding-left: 3em;
+    padding-left: 48px;
   }
 }
 .flex_footer > div {
@@ -69,9 +68,9 @@ body {
   font-size:20px;font-weight:700;line-height:24px;color:#fbfbfd;letter-spacing:-.5px
 }
 
-.jfk_textinput{border-radius:1px;border:1px solid #d9d9d9;border-top:1px solid #c0c0c0;font-size:13px;height:25px;padding:1px 8px}
-.jfk_textinput:focus{box-shadow:inset 0 1px 2px rgba(0,0,0,.3);border:1px solid #4d90fe;outline:none}
-.label_req{font-size:13px;line-height:25px;}
+.prc_textinput{border-radius:1px;border:1px solid #d9d9d9;border-top:1px solid #c0c0c0;font-size:15px;height:25px;padding:1px 8px}
+.prc_textinput:focus{box-shadow:inset 0 1px 2px rgba(0,0,0,.3);border:1px solid #4d90fe;outline:none}
+.label_req{font-size:15px;line-height:25px;}
 
 
 
@@ -81,26 +80,26 @@ body {
   flex-wrap: wrap;
   justify-content: start;
   background-color: white;
-  margin: 0 0.5em;
-  padding: 2em 0;
+  margin: 0 8px;
+  padding: 32px 0;
 
   border-radius: 8px;
   box-shadow: 2px 2px 20px 0 rgba(0,0,0,0.04);
 }
 
 .flex_input > div {
-  margin: 0 3em 1em;
+  margin: 0 48px 16px;
 }
 
 .flex_input_2 {
   display: block;
   justify-content: space-between;
-  margin: 0 0.5em;
-  padding: 2em;
+  margin: 0 8px;
+  padding: 32px;
 }
 @media only screen and (min-width: 992px) {
   .flex_input_2 {
-    padding-left: 3em;
+    padding-left: 48px;
   }
 }
 
@@ -108,11 +107,11 @@ body {
   display: flex;
   flex-flow: column;
   width: 100%;
-  margin-bottom: 0.7em;
+  margin-bottom: 11px;
 }
 @media only screen and (min-width: 992px) {
   .preference {
-    width: 20em;
+    width: 320px;
   }
 }
 
@@ -128,10 +127,10 @@ body {
   flex: 0 1 100%;
   display: flex;
   flex-direction: column;
-  margin: 0.5em;
-  padding: 1em;
+  margin: 8px;
+  padding: 16px;
   text-align: left;
-  font-size: 1em;
+  font-size: 16px;
 
   background: #fff;
   box-shadow: 2px 2px 20px 0 rgba(0,0,0,0.04);
@@ -139,23 +138,23 @@ body {
 }
 @media only screen and (min-width: 992px) {
   .flex-container > div {
-    flex: 0 1 20em;
+    flex: 0 1 320px;
   }
 }
 .flex-container > div:hover {
   box-shadow: 0 0 11px rgba(33,33,33,.2); 
 }
 .flex-container > div > p {
-  font-size: 1.4em;
+  font-size: 22.4px;
 }
 .flex-container > div > div {
-  font-size: 0.9em;
-  margin-top: 0.4em;
-  margin-bottom: 0.4em;
+  font-size: 14px;
+  margin-top: 6px;
+  margin-bottom: 6px;
 }
 .cont {
   max-width: 100%;
-  line-height: 1.4em
+  line-height: 22.4px
 }
 
 .select {
@@ -232,7 +231,7 @@ body {
 .title {
   vertical-align: middle;
   color: #333;
-  font-size: 1.286em;
+  font-size: 20px;
   line-height: 24px;
 }
 .title:hover {
@@ -241,7 +240,7 @@ body {
 }
 
 .publicDataDesc {
-  margin: 1em 0;
+  margin: 16px 0;
   
 }
 
@@ -426,11 +425,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 <div class="flex_input" id="input_area">
   <div class="preference">
     <label for="housePrc" class="label_req">주택가격 (housePrc)</label>
-    <input type="text" id="housePrc" name="housePrc" maxlength="20" size="20" class="jfk_textinput" style="text-align: end;">
+    <input type="text" id="housePrc" name="housePrc" maxlength="20" size="20" class="prc_textinput" style="text-align: end;">
   </div>
   <div class="preference">
     <label for="age" class="label_req">만 나이 (age)</label>
-    <input type="text" id="age" name="age" maxlength="3" size="20" class="jfk_textinput" style="text-align: end;">
+    <input type="text" id="age" name="age" maxlength="3" size="20" class="prc_textinput" style="text-align: end;">
   </div>
 </div>
 

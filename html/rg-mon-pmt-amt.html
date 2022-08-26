@@ -51,8 +51,6 @@ body {
     padding-left: 48px;
   }
 }
-.flex_footer > div {
-}
 
 .btn_req_wrap {margin:0;}
 .btn_req {
@@ -68,8 +66,19 @@ body {
   font-size:20px;font-weight:700;line-height:24px;color:#fbfbfd;letter-spacing:-.5px
 }
 
-.prc_textinput{border-radius:1px;border:1px solid #d9d9d9;border-top:1px solid #c0c0c0;font-size:15px;height:25px;padding:1px 8px}
+.prc_textinput{border-radius:1px;border:1px solid #d9d9d9;border-top:1px solid #c0c0c0;font-size:17px;height:25px;padding:1px 8px;width:80%;}
+@media only screen and (min-width: 992px) {
+  .prc_textinput{width:200px;}
+}
 .prc_textinput:focus{box-shadow:inset 0 1px 2px rgba(0,0,0,.3);border:1px solid #4d90fe;outline:none}
+
+.age_textinput{border-radius:1px;border:1px solid #d9d9d9;border-top:1px solid #c0c0c0;font-size:17px;height:25px;padding:1px 8px;width:80%;}
+@media only screen and (min-width: 992px) {
+  .age_textinput{width:100px;}
+}
+.age_textinput:focus{box-shadow:inset 0 1px 2px rgba(0,0,0,.3);border:1px solid #4d90fe;outline:none}
+
+
 .label_req{font-size:15px;line-height:25px;}
 
 
@@ -148,7 +157,7 @@ body {
   font-size: 22.4px;
 }
 .flex-container > div > div {
-  font-size: 14px;
+  font-size: 15px;
   margin-top: 6px;
   margin-bottom: 6px;
 }
@@ -248,6 +257,27 @@ a {
   text-decoration: none;
 }
 
+.flex_list {
+  display: flex;
+  justify-content: left;
+  flex-flow: row;
+  background-color: #fbfbfd;
+  margin-top: 32px;
+  padding: 16px;
+  text-align: start;
+}
+@media only screen and (min-width: 992px) {
+  .flex_list {
+    padding-left: 48px;
+  }
+}
+
+.border_box {
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  border-top: 3px solid #655bc2;
+}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js"></script>
@@ -296,6 +326,11 @@ async function getList() {
   board1.innerHTML = "";
   rcmdCmt.innerHTML = "";
   items = [];
+  let ageInt = Number($('#age')[0].value.replaceAll(",", ""));
+  const date = new Date();
+  let year = date.getFullYear();
+  let birthYear = year - ageInt;
+  let birthDy = birthYear + "0101";
   
   fetch("http://apis.data.go.kr/B551408/rg-mon-pmt-amt/pmt-info"
      + apiStr
@@ -303,8 +338,8 @@ async function getList() {
      + "&houseDvcd=01"
      + "&pnsnPayMthdDvcd=01"
      + "&mmPayAmtIndcDvcd=01"
-     + "&joinPersBrthDy=19610101"
-     + "&sposBrthDy=19610605"
+     + "&joinPersBrthDy=" + birthDy
+     + "&sposBrthDy=" + birthDy
      + "&payTermCd=01"
      + "&housePrc=" + housePrc.value.replaceAll(",", "")
      )
@@ -325,7 +360,7 @@ async function getList() {
         e.append(e1);
       
         let e23 = document.createElement('div');
-        e23.innerHTML = "예상월지급금: " + $.number(element.monPmtAmt);
+        e23.innerHTML = "예상월지급금: " + $.number(element.monPmtAmt) + " 원";
         e.append(e23);
             
     });
@@ -337,8 +372,8 @@ async function getList() {
      + "&houseDvcd=01"
      + "&pnsnPayMthdDvcd=01"
      + "&mmPayAmtIndcDvcd=41" // 초기증액형(10년)
-     + "&joinPersBrthDy=19610101"
-     + "&sposBrthDy=19610605"
+     + "&joinPersBrthDy=" + birthDy
+     + "&sposBrthDy=" + birthDy
      + "&payTermCd=01"
      + "&housePrc=" + housePrc.value.replaceAll(",", "")
      )
@@ -359,9 +394,86 @@ async function getList() {
         e.append(e1);
       
         let e23 = document.createElement('div');
-        e23.innerHTML = "예상월지급금: " + $.number(element.monPmtAmt);
+        e23.innerHTML = "예상월지급금(초기): " + $.number(element.monPmtAmt) + " 원";
         e.append(e23);
+
+        let e24 = document.createElement('div');
+        e24.innerHTML = "예상월지급금(후기): " + $.number(Math.round(element.monPmtAmt * 0.7 / 10)* 10) + " 원";
+        e.append(e24);
+    });
+
+  await new Promise(r => setTimeout(r, 500));
+  fetch("http://apis.data.go.kr/B551408/rg-mon-pmt-amt/pmt-info"
+     + apiStr
+     + "&wdrwLmtSetpAmt=0"
+     + "&houseDvcd=01"
+     + "&pnsnPayMthdDvcd=01"
+     + "&mmPayAmtIndcDvcd=42" // 초기증액형(7년)
+     + "&joinPersBrthDy=" + birthDy
+     + "&sposBrthDy=" + birthDy
+     + "&payTermCd=01"
+     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     )
+    .then(r => r.json())
+    .then(d => {
+
+        dd = d;
+        items.push(d.body.item);
+	   getCnt();
+        
+        let element = d.body.item;
+        
+        let e = document.createElement('div');
+        board1.append(e);
             
+        let e1 = document.createElement('p');
+        e1.innerHTML = "종신지급방식 초기증액형(7년)";
+        e.append(e1);
+      
+        let e23 = document.createElement('div');
+        e23.innerHTML = "예상월지급금(초기): " + $.number(element.monPmtAmt) + " 원";
+        e.append(e23);
+
+        let e24 = document.createElement('div');
+        e24.innerHTML = "예상월지급금(후기): " + $.number(Math.round(element.monPmtAmt * 0.7 / 10)* 10) + " 원";
+        e.append(e24);
+    });
+
+  await new Promise(r => setTimeout(r, 500));
+  fetch("http://apis.data.go.kr/B551408/rg-mon-pmt-amt/pmt-info"
+     + apiStr
+     + "&wdrwLmtSetpAmt=0"
+     + "&houseDvcd=01"
+     + "&pnsnPayMthdDvcd=01"
+     + "&mmPayAmtIndcDvcd=43" // 초기증액형(5년)
+     + "&joinPersBrthDy=" + birthDy
+     + "&sposBrthDy=" + birthDy
+     + "&payTermCd=01"
+     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     )
+    .then(r => r.json())
+    .then(d => {
+
+        dd = d;
+        items.push(d.body.item);
+	   getCnt();
+        
+        let element = d.body.item;
+        
+        let e = document.createElement('div');
+        board1.append(e);
+            
+        let e1 = document.createElement('p');
+        e1.innerHTML = "종신지급방식 초기증액형(5년)";
+        e.append(e1);
+      
+        let e23 = document.createElement('div');
+        e23.innerHTML = "예상월지급금(초기): " + $.number(element.monPmtAmt) + " 원";
+        e.append(e23);
+
+        let e24 = document.createElement('div');
+        e24.innerHTML = "예상월지급금(후기): " + $.number(Math.round(element.monPmtAmt * 0.7 / 10)* 10) + " 원";
+        e.append(e24);
     });
 
   await new Promise(r => setTimeout(r, 500));
@@ -371,8 +483,8 @@ async function getList() {
      + "&houseDvcd=01"
      + "&pnsnPayMthdDvcd=01"
      + "&mmPayAmtIndcDvcd=44" // 초기증액형(3년)
-     + "&joinPersBrthDy=19610101"
-     + "&sposBrthDy=19610605"
+     + "&joinPersBrthDy=" + birthDy
+     + "&sposBrthDy=" + birthDy
      + "&payTermCd=01"
      + "&housePrc=" + housePrc.value.replaceAll(",", "")
      )
@@ -393,9 +505,12 @@ async function getList() {
         e.append(e1);
       
         let e23 = document.createElement('div');
-        e23.innerHTML = "예상월지급금: " + $.number(element.monPmtAmt);
+        e23.innerHTML = "예상월지급금(초기): " + $.number(element.monPmtAmt) + " 원";
         e.append(e23);
-            
+
+        let e24 = document.createElement('div');
+        e24.innerHTML = "예상월지급금(후기): " + $.number(Math.round(element.monPmtAmt * 0.7 / 10)* 10) + " 원";
+        e.append(e24);
     });
     
 }
@@ -425,11 +540,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 <div class="flex_input" id="input_area">
   <div class="preference">
     <label for="housePrc" class="label_req">주택가격 (housePrc)</label>
-    <input type="text" id="housePrc" name="housePrc" maxlength="20" size="20" class="prc_textinput" style="text-align: end;">
+    <div>
+      <input type="text" id="housePrc" name="housePrc" maxlength="20" size="20" class="prc_textinput" style="text-align: end;"> 원
+    </div>
   </div>
   <div class="preference">
     <label for="age" class="label_req">만 나이 (age)</label>
-    <input type="text" id="age" name="age" maxlength="3" size="20" class="prc_textinput" style="text-align: end;">
+    <input type="text" id="age" name="age" maxlength="3" size="20" class="age_textinput" style="text-align: end;">
   </div>
 </div>
 
@@ -450,8 +567,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   </div>
 </div>
 
-<div id="div2" class="flex_footer">
-  <dl>
+<div id="div2" class="flex_list">
+  <dl class="border_box">
     <dt>
       <a href="https://data.go.kr/data/15082043/openapi.do" target="_blank">
         <span class="title">

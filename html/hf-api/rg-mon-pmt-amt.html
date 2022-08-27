@@ -120,7 +120,7 @@ body {
 }
 @media only screen and (min-width: 992px) {
   .preference {
-    width: 320px;
+    width: 280px;
   }
 }
 
@@ -326,11 +326,17 @@ async function getList() {
   board1.innerHTML = "";
   rcmdCmt.innerHTML = "";
   items = [];
-  let ageInt = Number($('#age')[0].value.replaceAll(",", ""));
+  
   const date = new Date();
   let year = date.getFullYear();
+  
+  let ageInt = Number($('#age')[0].value.replaceAll(",", ""));
   let birthYear = year - ageInt;
   let birthDy = birthYear + "0101";
+
+  let sposAgeInt = Number($('#sposAge')[0].value.replaceAll(",", ""));
+  let sposBirthYear = year - sposAgeInt;
+  let sposBirthDy = sposBirthYear + "0101";
   
   await fetch("http://apis.data.go.kr/B551408/rg-mon-pmt-amt/pmt-info"
      + apiStr
@@ -339,7 +345,7 @@ async function getList() {
      + "&pnsnPayMthdDvcd=01"
      + "&mmPayAmtIndcDvcd=01"
      + "&joinPersBrthDy=" + birthDy
-     + "&sposBrthDy=" + birthDy
+     + "&sposBrthDy=" + sposBirthDy
      + "&payTermCd=01"
      + "&housePrc=" + housePrc.value.replaceAll(",", "")
      )
@@ -373,7 +379,7 @@ async function getList() {
      + "&pnsnPayMthdDvcd=01"
      + "&mmPayAmtIndcDvcd=41" // 초기증액형(10년)
      + "&joinPersBrthDy=" + birthDy
-     + "&sposBrthDy=" + birthDy
+     + "&sposBrthDy=" + sposBirthDy
      + "&payTermCd=01"
      + "&housePrc=" + housePrc.value.replaceAll(",", "")
      )
@@ -410,7 +416,7 @@ async function getList() {
      + "&pnsnPayMthdDvcd=01"
      + "&mmPayAmtIndcDvcd=42" // 초기증액형(7년)
      + "&joinPersBrthDy=" + birthDy
-     + "&sposBrthDy=" + birthDy
+     + "&sposBrthDy=" + sposBirthDy
      + "&payTermCd=01"
      + "&housePrc=" + housePrc.value.replaceAll(",", "")
      )
@@ -447,7 +453,7 @@ async function getList() {
      + "&pnsnPayMthdDvcd=01"
      + "&mmPayAmtIndcDvcd=43" // 초기증액형(5년)
      + "&joinPersBrthDy=" + birthDy
-     + "&sposBrthDy=" + birthDy
+     + "&sposBrthDy=" + sposBirthDy
      + "&payTermCd=01"
      + "&housePrc=" + housePrc.value.replaceAll(",", "")
      )
@@ -484,7 +490,7 @@ async function getList() {
      + "&pnsnPayMthdDvcd=01"
      + "&mmPayAmtIndcDvcd=44" // 초기증액형(3년)
      + "&joinPersBrthDy=" + birthDy
-     + "&sposBrthDy=" + birthDy
+     + "&sposBrthDy=" + sposBirthDy
      + "&payTermCd=01"
      + "&housePrc=" + housePrc.value.replaceAll(",", "")
      )
@@ -526,6 +532,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   });
   $('#housePrc').number(true, 0);
   $('#age').number(true, 0);
+  $('#sposAge').number(true, 0);
   document.getElementById("housePrc").focus();
 });
 
@@ -545,8 +552,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
     </div>
   </div>
   <div class="preference">
-    <label for="age" class="label_req">만 나이 (age)</label>
+    <label for="age" class="label_req">주택소유자 만 나이 (age)</label>
     <input type="text" id="age" name="age" maxlength="3" size="20" class="age_textinput" style="text-align: end;">
+  </div>
+  <div class="preference">
+    <label for="sposAge" class="label_req">배우자 만 나이 (sposAge)</label>
+    <input type="text" id="sposAge" name="sposAge" maxlength="3" size="20" class="age_textinput" style="text-align: end;">
   </div>
 </div>
 

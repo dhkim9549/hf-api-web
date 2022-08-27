@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bada.ai</title>
+
+<style>
+html {
+  font-size: 16px;
+  color: #333;
+}
+body {
+  background-color: #fbfbfd;
+  font-family: NanumGothic, 'Malgun Gothic', '맑은 고딕', Dotum, '돋움', sans-serif;
+}
+
+.flex_header {
+  display: flex;
+  justify-content: left;
+  flex-flow: column;
+  background-color: #fbfbfd;
+  margin: 0px;
+  padding-top: 48px;
+  padding-bottom: 32px;
+  text-align: center;
+}
+@media only screen and (min-width: 992px) {
+  .flex_header {
+    padding-left: 48px;
+    text-align: start;
+  }
+}
+.flex_header > div {
+  margin-bottom: 11px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.flex_footer {
+  display: flex;
+  justify-content: left;
+  flex-flow: column;
+  background-color: #fbfbfd;
+  margin-top: 32px;
+  padding: 16px;
+  text-align: start;
+}
+@media only screen and (min-width: 992px) {
+  .flex_footer {
+    padding-left: 48px;
+  }
+}
+
+.flex_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  background-color: #fbfbfd;
+  margin: 0px;
+  padding: 5px;
+}
+.flex_container > a {
+  flex: 0 1 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
+  padding: 16px;
+  text-align: left;
+  font-size: 16px;
+
+  background: #fff;
+  box-shadow: 2px 2px 20px 0 rgba(0,0,0,0.04);
+  overflow: auto;
+}
+@media only screen and (min-width: 992px) {
+  .flex_container > a {
+    flex: 0 1 320px;
+  }
+}
+.flex_container > a:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+.flex_container > a > p {
+  font-size: 22.4px;
+}
+.flex_container > a > div {
+  font-size: 15px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<div id="board0" class="flex_header">
+    <div>bada.ai</div>
+</div>
+
+<div id="board1" class="flex_container">
+  <a href="ansim-publish">
+    <p>안심전환대출 안내페이지</p>
+    <div>테스트용 웹페이지</div>
+  </a>
+  <a href="hf-api/rg-mon-pmt-amt.html">
+    <p>주택연금 예상월지급금 조회</p>
+    <div>HF OpenAPI</div>
+  </a>
+</div>
+
+<div id="div1" class="flex_footer">
+  <div id="rcmdCmt">
+  bada.ai
+  </div>
+</div>
+
+</body></html>

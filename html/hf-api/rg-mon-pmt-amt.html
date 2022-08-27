@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>주택연금 예상월지급금 조회</title>
+
+<style>
+html {
+  font-size: 16px;
+  color: #333;
+}
+body {
+  background-color: #fbfbfd;
+  font-family: NanumGothic, 'Malgun Gothic', '맑은 고딕', Dotum, '돋움', sans-serif;
+}
+
+.flex_header {
+  display: flex;
+  justify-content: left;
+  flex-flow: column;
+  background-color: #fbfbfd;
+  margin: 0px;
+  padding-top: 48px;
+  padding-bottom: 32px;
+  text-align: center;
+}
+@media only screen and (min-width: 992px) {
+  .flex_header {
+    padding-left: 48px;
+    text-align: start;
+  }
+}
+.flex_header > div {
+  margin-bottom: 11px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.flex_footer {
+  display: flex;
+  justify-content: left;
+  flex-flow: column;
+  background-color: #fbfbfd;
+  margin-top: 32px;
+  padding: 16px;
+  text-align: start;
+}
+@media only screen and (min-width: 992px) {
+  .flex_footer {
+    padding-left: 48px;
+  }
+}
+
+.btn_req_wrap {margin:0;}
+.btn_req {
+  display:block;width:100%;padding:13px 0 13px;
+  border:solid 1px rgba(0,0,0,.15);background-color:#B40F1F;box-sizing:border-box;padding:13px 0;border-radius:5.4px
+}
+@media only screen and (min-width: 992px) {
+  .btn_req {
+    width:150px;
+  }
+}
+.btn_text {
+  font-size:20px;font-weight:700;line-height:24px;color:#fbfbfd;letter-spacing:-.5px
+}
+
+.prc_textinput{border-radius:1px;border:1px solid #d9d9d9;border-top:1px solid #c0c0c0;font-size:17px;height:37px;padding:1px 8px;width:80%;}
+@media only screen and (min-width: 992px) {
+  .prc_textinput{width:200px;}
+}
+.prc_textinput:focus{box-shadow:inset 0 1px 2px rgba(0,0,0,.3);border:1px solid #4d90fe;outline:none}
+
+.age_textinput{border-radius:1px;border:1px solid #d9d9d9;border-top:1px solid #c0c0c0;font-size:17px;height:37px;padding:1px 8px;width:80%;}
+@media only screen and (min-width: 992px) {
+  .age_textinput{width:100px;}
+}
+.age_textinput:focus{box-shadow:inset 0 1px 2px rgba(0,0,0,.3);border:1px solid #4d90fe;outline:none}
+
+
+.label_req{font-size:15px;line-height:25px;}
+
+
+
+
+.flex_input {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  background-color: white;
+  margin: 0 8px;
+  padding: 32px 0;
+
+  border-radius: 8px;
+  box-shadow: 2px 2px 20px 0 rgba(0,0,0,0.04);
+}
+
+.flex_input > div {
+  margin: 0 48px 16px;
+}
+
+.flex_input_2 {
+  display: block;
+  justify-content: space-between;
+  margin: 0 8px;
+  padding: 32px;
+}
+@media only screen and (min-width: 992px) {
+  .flex_input_2 {
+    padding-left: 48px;
+  }
+}
+
+.preference {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  margin-bottom: 11px;
+}
+@media only screen and (min-width: 992px) {
+  .preference {
+    width: 320px;
+  }
+}
+
+.flex_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  background-color: #fbfbfd;
+  margin: 0px;
+  padding: 5px;
+}
+.flex_container > div {
+  flex: 0 1 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
+  padding: 16px;
+  text-align: left;
+  font-size: 16px;
+
+  background: #fff;
+  box-shadow: 2px 2px 20px 0 rgba(0,0,0,0.04);
+  overflow: auto;
+}
+@media only screen and (min-width: 992px) {
+  .flex_container > div {
+    flex: 0 1 320px;
+  }
+}
+.flex_container > div:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+.flex_container > div > p {
+  font-size: 22.4px;
+}
+.flex_container > div > div {
+  font-size: 15px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+.cont {
+  max-width: 100%;
+  line-height: 22.4px
+}
+
+.select {
+    padding: 0;
+}
+.select input[type=radio]{
+    display: none;
+}
+.select input[type=radio]+label{
+    display: inline-block;
+    cursor: pointer;
+    height: 24px;
+    width: 60px;
+    border: 1px solid #333;
+    line-height: 24px;
+    text-align: center;
+    font-weight:bold;
+    font-size:13px;
+}
+.select input[type=radio]+label{
+    background-color: #fff;
+    color: #333;
+}
+.select input[type=radio]:checked+label{
+    background-color: #333;
+    color: #fff;
+}
+.checks {
+    position: relative;
+    height: 20px;
+    padding: 0;
+    line-height: 20px;
+}
+.checks label {
+    font-weight:bold;
+    font-size:13px;
+    margin-right: 10px;
+    vertical-align: middle;
+}            
+.checks input[type="radio"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+.checks input[type="radio"]+label {
+    display: inline-block;
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+}
+.checks input[type="radio"]+label:before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0px;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #cacece;
+    border-radius: 100%;
+    box-shadow: none;
+}
+.checks input[type="radio"]:checked+label:before {
+    background: #333;
+    border-color: #333;
+} 
+
+.title {
+  vertical-align: middle;
+  color: #333;
+  font-size: 20px;
+  line-height: 24px;
+}
+.title:hover {
+    color: #2775c4;
+    text-decoration: underline;
+}
+
+.publicDataDesc {
+  margin: 16px 0;
+  
+}
+
+a {
+  text-decoration: none;
+}
+
+.flex_list {
+  display: flex;
+  justify-content: left;
+  flex-flow: row;
+  background-color: #fbfbfd;
+  margin-top: 32px;
+  padding: 16px;
+  text-align: start;
+}
+@media only screen and (min-width: 992px) {
+  .flex_list {
+    padding-left: 48px;
+  }
+}
+
+.border_box {
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  border-top: 3px solid #655bc2;
+}
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js"></script>
+<script>
+
+let dd;
+
+function getRadioButtonValue(varName) {
+  const radioButtons = document.querySelectorAll('input[name=' + varName +']');
+  let selectedValue;
+  for (const radioButton of radioButtons) {
+    if (radioButton.checked) {
+      selectedValue = radioButton.value;
+      break;
+    }
+  }
+  return selectedValue;
+}
+
+function getCnt() {
+
+   let rcmdCmt = document.getElementById("rcmdCmt");
+   if(items.length == 0) {
+     rcmdCmt.innerHTML = "조회 결과가 없습니다.";
+   } else {
+     rcmdCmt.innerHTML = items.length + " 건이 조회되었습니다.";
+   }
+}
+
+let apiStr = ""
+     + "?serviceKey=PW2VvwTvkcs%2FWMVLduXzeRL0BPjOYH%2B0wMnsQiyy5UgcrukEjAurATJUNkeA7T%2Bj47s3GAmLzHduip%2BfbxESlQ%3D%3D"
+     + "&pageNo=1"
+     + "&numOfRows=10"
+     + "&dataType=JSON"
+	;
+
+let items = [];
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function getList() {
+
+  let board1 = document.getElementById("board1");
+  board1.innerHTML = "";
+  rcmdCmt.innerHTML = "";
+  items = [];
+  let ageInt = Number($('#age')[0].value.replaceAll(",", ""));
+  const date = new Date();
+  let year = date.getFullYear();
+  let birthYear = year - ageInt;
+  let birthDy = birthYear + "0101";
+  
+  await fetch("http://apis.data.go.kr/B551408/rg-mon-pmt-amt/pmt-info"
+     + apiStr
+     + "&wdrwLmtSetpAmt=0"
+     + "&houseDvcd=01"
+     + "&pnsnPayMthdDvcd=01"
+     + "&mmPayAmtIndcDvcd=01"
+     + "&joinPersBrthDy=" + birthDy
+     + "&sposBrthDy=" + birthDy
+     + "&payTermCd=01"
+     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     )
+    .then(r => r.json())
+    .then(d => {
+
+        dd = d;
+        items.push(d.body.item);
+	   getCnt();
+        
+        let element = d.body.item;
+        
+        let e = document.createElement('div');
+        board1.append(e);
+            
+        let e1 = document.createElement('p');
+        e1.innerHTML = "종신지급방식 정액형";
+        e.append(e1);
+      
+        let e23 = document.createElement('div');
+        e23.innerHTML = "예상월지급금: " + $.number(element.monPmtAmt) + " 원";
+        e.append(e23);
+            
+    });
+
+  // await new Promise(r => setTimeout(r, 500));
+  await fetch("http://apis.data.go.kr/B551408/rg-mon-pmt-amt/pmt-info"
+     + apiStr
+     + "&wdrwLmtSetpAmt=0"
+     + "&houseDvcd=01"
+     + "&pnsnPayMthdDvcd=01"
+     + "&mmPayAmtIndcDvcd=41" // 초기증액형(10년)
+     + "&joinPersBrthDy=" + birthDy
+     + "&sposBrthDy=" + birthDy
+     + "&payTermCd=01"
+     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     )
+    .then(r => r.json())
+    .then(d => {
+
+        dd = d;
+        items.push(d.body.item);
+	   getCnt();
+        
+        let element = d.body.item;
+        
+        let e = document.createElement('div');
+        board1.append(e);
+            
+        let e1 = document.createElement('p');
+        e1.innerHTML = "종신지급방식 초기증액형(10년)";
+        e.append(e1);
+      
+        let e23 = document.createElement('div');
+        e23.innerHTML = "예상월지급금(초기): " + $.number(element.monPmtAmt) + " 원";
+        e.append(e23);
+
+        let e24 = document.createElement('div');
+        e24.innerHTML = "예상월지급금(후기): " + $.number(Math.round(element.monPmtAmt * 0.7 / 10)* 10) + " 원";
+        e.append(e24);
+    });
+
+  // await new Promise(r => setTimeout(r, 500));
+  await fetch("http://apis.data.go.kr/B551408/rg-mon-pmt-amt/pmt-info"
+     + apiStr
+     + "&wdrwLmtSetpAmt=0"
+     + "&houseDvcd=01"
+     + "&pnsnPayMthdDvcd=01"
+     + "&mmPayAmtIndcDvcd=42" // 초기증액형(7년)
+     + "&joinPersBrthDy=" + birthDy
+     + "&sposBrthDy=" + birthDy
+     + "&payTermCd=01"
+     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     )
+    .then(r => r.json())
+    .then(d => {
+
+        dd = d;
+        items.push(d.body.item);
+	   getCnt();
+        
+        let element = d.body.item;
+        
+        let e = document.createElement('div');
+        board1.append(e);
+            
+        let e1 = document.createElement('p');
+        e1.innerHTML = "종신지급방식 초기증액형(7년)";
+        e.append(e1);
+      
+        let e23 = document.createElement('div');
+        e23.innerHTML = "예상월지급금(초기): " + $.number(element.monPmtAmt) + " 원";
+        e.append(e23);
+
+        let e24 = document.createElement('div');
+        e24.innerHTML = "예상월지급금(후기): " + $.number(Math.round(element.monPmtAmt * 0.7 / 10)* 10) + " 원";
+        e.append(e24);
+    });
+
+  // await new Promise(r => setTimeout(r, 500));
+  await fetch("http://apis.data.go.kr/B551408/rg-mon-pmt-amt/pmt-info"
+     + apiStr
+     + "&wdrwLmtSetpAmt=0"
+     + "&houseDvcd=01"
+     + "&pnsnPayMthdDvcd=01"
+     + "&mmPayAmtIndcDvcd=43" // 초기증액형(5년)
+     + "&joinPersBrthDy=" + birthDy
+     + "&sposBrthDy=" + birthDy
+     + "&payTermCd=01"
+     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     )
+    .then(r => r.json())
+    .then(d => {
+
+        dd = d;
+        items.push(d.body.item);
+	   getCnt();
+        
+        let element = d.body.item;
+        
+        let e = document.createElement('div');
+        board1.append(e);
+            
+        let e1 = document.createElement('p');
+        e1.innerHTML = "종신지급방식 초기증액형(5년)";
+        e.append(e1);
+      
+        let e23 = document.createElement('div');
+        e23.innerHTML = "예상월지급금(초기): " + $.number(element.monPmtAmt) + " 원";
+        e.append(e23);
+
+        let e24 = document.createElement('div');
+        e24.innerHTML = "예상월지급금(후기): " + $.number(Math.round(element.monPmtAmt * 0.7 / 10)* 10) + " 원";
+        e.append(e24);
+    });
+
+  // await new Promise(r => setTimeout(r, 500));
+  await fetch("http://apis.data.go.kr/B551408/rg-mon-pmt-amt/pmt-info"
+     + apiStr
+     + "&wdrwLmtSetpAmt=0"
+     + "&houseDvcd=01"
+     + "&pnsnPayMthdDvcd=01"
+     + "&mmPayAmtIndcDvcd=44" // 초기증액형(3년)
+     + "&joinPersBrthDy=" + birthDy
+     + "&sposBrthDy=" + birthDy
+     + "&payTermCd=01"
+     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     )
+    .then(r => r.json())
+    .then(d => {
+
+        dd = d;
+        items.push(d.body.item);
+	   getCnt();
+        
+        let element = d.body.item;
+        
+        let e = document.createElement('div');
+        board1.append(e);
+            
+        let e1 = document.createElement('p');
+        e1.innerHTML = "종신지급방식 초기증액형(3년)";
+        e.append(e1);
+      
+        let e23 = document.createElement('div');
+        e23.innerHTML = "예상월지급금(초기): " + $.number(element.monPmtAmt) + " 원";
+        e.append(e23);
+
+        let e24 = document.createElement('div');
+        e24.innerHTML = "예상월지급금(후기): " + $.number(Math.round(element.monPmtAmt * 0.7 / 10)* 10) + " 원";
+        e.append(e24);
+    });
+    
+}
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  document.getElementById("button1").addEventListener("click", function() {
+    getList();
+  });
+  document.getElementById("input_area").addEventListener('keydown', (e) => {
+    if(e.key == "Enter") {
+      document.getElementById("button1").click(); 
+    }
+  });
+  $('#housePrc').number(true, 0);
+  $('#age').number(true, 0);
+  document.getElementById("housePrc").focus();
+});
+
+</script>
+</head>
+<body id="body1">
+
+<div id="board0" class="flex_header">
+    <div>주택연금 예상월지급금 조회</div>
+</div>
+
+<div class="flex_input" id="input_area">
+  <div class="preference">
+    <label for="housePrc" class="label_req">주택가격 (housePrc)</label>
+    <div>
+      <input type="text" id="housePrc" name="housePrc" maxlength="20" size="20" class="prc_textinput" style="text-align: end;"> 원
+    </div>
+  </div>
+  <div class="preference">
+    <label for="age" class="label_req">만 나이 (age)</label>
+    <input type="text" id="age" name="age" maxlength="3" size="20" class="age_textinput" style="text-align: end;">
+  </div>
+</div>
+
+<div class="flex_input_2">
+  <div class="btn_req_wrap">
+    <button class="btn_req" id="button1">
+      <span class="btn_text">조회</span>
+    </button>
+  </div>
+</div>
+
+<div id="board1" class="flex_container">
+</div>
+
+<div id="div1" class="flex_footer">
+  <div id="rcmdCmt">
+  주택연금 예상월지급금을 조회합니다.
+  </div>
+</div>
+
+<div id="div2" class="flex_list">
+  <dl class="border_box">
+    <dt>
+      <a href="https://data.go.kr/data/15082043/openapi.do" target="_blank">
+        <span class="title">
+          한국주택금융공사_주택연금예상연금조회 오픈 API
+        </span>
+      </a>
+    </dt>
+    <dd class="publicDataDesc">
+      한국주택금융공사에서 제공하는 주택연금에 대한 예상 월지급금, 최대인출한도 등의 정보를 조회할 수 있는 서비스
+    </dd>
+  </dl>
+</div>
+
+</body></html>

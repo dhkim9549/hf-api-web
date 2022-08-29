@@ -249,8 +249,7 @@ body {
 }
 
 .publicDataDesc {
-  margin: 16px 0;
-  
+  margin: 16px 0;  
 }
 
 a {
@@ -327,6 +326,8 @@ async function getList() {
   rcmdCmt.innerHTML = "";
   items = [];
   
+  let housePrcAmt = Number(housePrc.value.replaceAll(",", ""));
+  
   const date = new Date();
   let year = date.getFullYear();
   
@@ -338,6 +339,24 @@ async function getList() {
   let sposBirthYear = year - sposAgeInt;
   let sposBirthDy = sposBirthYear + "0101";
   
+  if(housePrcAmt >= 1) {
+  } else {
+    alert("주택가격을 입력해세요.");
+    return;
+  }
+
+  if(ageInt >= 1) {
+  } else {
+    alert("주택소유자 나이를 입력해세요.");
+    return;
+  }
+  
+  if(ageInt >= 55 || sposAgeInt >= 55) {
+  } else {
+    alert("부부 중 1명이 만 55세 이상이어야 합니다.");
+    return;
+  }
+  
   await fetch("http://apis.data.go.kr/B551408/rg-mon-pmt-amt/pmt-info"
      + apiStr
      + "&wdrwLmtSetpAmt=0"
@@ -347,7 +366,7 @@ async function getList() {
      + "&joinPersBrthDy=" + birthDy
      + "&sposBrthDy=" + sposBirthDy
      + "&payTermCd=01"
-     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     + "&housePrc=" + housePrcAmt
      )
     .then(r => r.json())
     .then(d => {
@@ -381,7 +400,7 @@ async function getList() {
      + "&joinPersBrthDy=" + birthDy
      + "&sposBrthDy=" + sposBirthDy
      + "&payTermCd=01"
-     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     + "&housePrc=" + housePrcAmt
      )
     .then(r => r.json())
     .then(d => {
@@ -418,7 +437,7 @@ async function getList() {
      + "&joinPersBrthDy=" + birthDy
      + "&sposBrthDy=" + sposBirthDy
      + "&payTermCd=01"
-     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     + "&housePrc=" + housePrcAmt
      )
     .then(r => r.json())
     .then(d => {
@@ -455,7 +474,7 @@ async function getList() {
      + "&joinPersBrthDy=" + birthDy
      + "&sposBrthDy=" + sposBirthDy
      + "&payTermCd=01"
-     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     + "&housePrc=" + housePrcAmt
      )
     .then(r => r.json())
     .then(d => {
@@ -492,7 +511,7 @@ async function getList() {
      + "&joinPersBrthDy=" + birthDy
      + "&sposBrthDy=" + sposBirthDy
      + "&payTermCd=01"
-     + "&housePrc=" + housePrc.value.replaceAll(",", "")
+     + "&housePrc=" + housePrcAmt
      )
     .then(r => r.json())
     .then(d => {
@@ -530,11 +549,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
       document.getElementById("button1").click(); 
     }
   });
-  $('#housePrc').number(true, 0);
-  $('#age').number(true, 0);
-  $('#sposAge').number(true, 0);
-  document.getElementById("housePrc").focus();
+  
+  numberFormat('housePrc');
+  numberFormat('age');
+  numberFormat('sposAge');
+  
+  document.getElementById('housePrc').focus();
 });
+
+function numberFormat(elementId) {
+  let element = document.getElementById(elementId);
+  element.addEventListener("input", function(event) {
+    element.value = element.value.replace(/[^0-9]/g, '');
+    element.value = numberWithCommas(element.value);
+  });
+}
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 </script>
 </head>

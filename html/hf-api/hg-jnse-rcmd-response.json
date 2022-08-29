@@ -1,0 +1,111 @@
+{
+  "header": {
+    "fstReqSysIpad": "",
+    "inifMaskRlsYn": "N",
+    "responseCode": "NON-0200",
+    "sendSysDvcd": "OPA",
+    "inputMsgType": null,
+    "sysEnvDvcd": "P",
+    "sendNodeNo": "",
+    "responseMsgDetails": null,
+    "fstTlgmReqDt": "",
+    "recvTaskClcd": "HGIG",
+    "trdPrcsSeq": "7",
+    "responseMsg": null,
+    "trdTrcGid": "35859860353228319520115837085943859861",
+    "inifMaskDtlYn": "",
+    "uiCommon": {
+      "otptRtdoFileNm": "",
+      "jgrdCd": "",
+      "scrnId": "_",
+      "epno": "99999",
+      "hqbrCd": "",
+      "empNm": "",
+      "menuId": "",
+      "btnId": "",
+      "brofCd": "WEB",
+      "brofTeamCd": "",
+      "otptPrcsTypeDvcd": ""
+    },
+    "reqRespDvcd": "R",
+    "sendTaskClcd": "ONLE",
+    "length": 0,
+    "srvcPreAftPrcsRsltCd": "6",
+    "trdCommon": {
+      "trdPrcsRsltCd": "0",
+      "intfId": "OPAONLE_CORHGIG_EOS_00005",
+      "trdPageNo": 0,
+      "recvFileNm": "",
+      "taskTycd": "O",
+      "trdInqCnt": 0,
+      "trdAllCnt": 0,
+      "sendFileNm": null,
+      "sendFilePath": "",
+      "priqTrdYn": "",
+      "pageTrdYn": "",
+      "recvFilePath": ""
+    },
+    "msgPrcss": {
+      "dtlMsgReptCnt": 0,
+      "errOccrFildVal": "",
+      "repMsgCont": "",
+      "repMsgCd": "",
+      "dtlMsgList": [],
+      "msgIdctDvcd": "1",
+      "errOccrFildNm": ""
+    },
+    "inifTrtYn": "",
+    "reqChnlId": "OPA",
+    "fileBaseDirectory": null,
+    "tlgmVrsnNo": "",
+    "inifMaskPrcsYn": "N",
+    "service": "hf2_cor.hf2_cor_service.SHGIGESBS002",
+    "transferKey": null,
+    "outputMsgType": null,
+    "tenantId": null,
+    "tlgmGid": "20220829100712584PESBOPAONLE00",
+    "sendDt": "",
+    "files": [],
+    "guid": null,
+    "langDvcd": "KR",
+    "recvSysDvcd": "COR",
+    "asyncDvcd": "S",
+    "serviceMethod": "selListJnseRcmd"
+  },
+  "dto": {
+    "listItems": [
+      {
+        "grntDvcd": "4J",
+        "grntLmtAmt": "70000000",
+        "cont2": "자세한 사항은 서울주거포털(https://housing.seoul.go.kr)>주거정책>청년·신혼부부 지원>청년임차보증금 지원 참고",
+        "cont1": "서울특별시의 융자추천에 선정된 사회초년생 및 취업준비생 을 대상으로 이자를 지원하고 한국주택금융공사의 보증서를 담보로 최대 7천만원까지 지원하는 전세자금대출\n\n문의처\n서울 다산콜센터(02-120)또는 주거복지지원센터\n하나은행(1599-2222)\n\n예상 보증료율: 0.02(최저보증료율)",
+        "loanLmtAmt": "70000000",
+        "prorRnk": 1,
+        "prodNm": "서울시 청년 전세자금대출"
+      },
+      {
+        "grntDvcd": "2V",
+        "grntLmtAmt": "100000000",
+        "cont2": "자세한 사항은 한국주택금융공사 홈페이지(https://www.hf.go.kr)\n>주택보증>전세자금보증(특례)>청년전용",
+        "cont1": "청년층 주거비용을 경감하기 위해 한국주택금융공사의 보증서를 담보로 최대 1억원까지 지원하는 청년 전용 전세자금 대출\n\n문의처: 1688-8114(공사콜센터)\n\n예상 보증료율: 0.02(최저보증료율)",
+        "loanLmtAmt": "100000000",
+        "prorRnk": 2,
+        "prodNm": "청년맞춤형 전세자금대출"
+      },
+      {
+        "grntDvcd": "2D",
+        "grntLmtAmt": "30000000",
+        "cont2": "자세한 사항은 한국주택금융공사 홈페이지(https://www.hf.go.kr)\n>주택보증>전세자금보증>일반전세",
+        "cont1": "주택에 전세로 입주하는 고객이나 기존에 전세로 거주한 고객 중 재계약자를 대상으로, 부족한 전세자금 지원을 위하여 한국주택금융공사의 보증서를 담보로 최대 222백만원까지 지원하는 전세자금대출\n\n문의처: 1688-8114(공사콜센터)\n\n예상 보증료율: 0.02(최저보증료율)",
+        "loanLmtAmt": "33333333",
+        "prorRnk": 3,
+        "prodNm": "일반전세자금대출(한국주택금융공사 보증서담보)"
+      }
+    ],
+    "pageNo": 1,
+    "resultCode": "0",
+    "totalCount": 3,
+    "numOfRows": 30,
+    "resultMsg": "정상"
+  }
+}

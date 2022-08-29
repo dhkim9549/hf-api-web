@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HF 전세자금보증 추천</title>
+<style>
+html {
+  font-size: 16px;
+  color: #333;
+}
+body {
+  background-color: #fbfbfd;
+  font-family: NanumGothic, 'Malgun Gothic', '맑은 고딕', Dotum, '돋움', sans-serif;
+}
+
+.flex_header {
+  display: flex;
+  justify-content: left;
+  flex-flow: column;
+  background-color: #fbfbfd;
+  margin: 0px;
+  padding-top: 48px;
+  padding-bottom: 32px;
+  text-align: center;
+}
+@media only screen and (min-width: 992px) {
+  .flex_header {
+    padding-left: 48px;
+    text-align: start;
+  }
+}
+.flex_header > div {
+  margin-bottom: 11px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.flex_footer {
+  display: flex;
+  justify-content: left;
+  flex-flow: column;
+  background-color: #fbfbfd;
+  margin-top: 32px;
+  padding: 16px;
+  text-align: start;
+}
+@media only screen and (min-width: 992px) {
+  .flex_footer {
+    padding-left: 48px;
+  }
+}
+
+.flex_input {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  background-color: white;
+  margin: 0 0.5em;
+  padding: 2em 0;
+
+  border-radius: 8px;
+  box-shadow: 2px 2px 20px 0 rgba(0,0,0,0.04);
+}
+
+.flex_input > div {
+  margin: 0 3em 1em;
+}
+
+.flex_input_2 {
+  display: block;
+  justify-content: space-between;
+  margin: 0 8px;
+  padding: 32px;
+}
+@media only screen and (min-width: 992px) {
+  .flex_input_2 {
+    padding-left: 48px;
+  }
+}
+
+.btn_req_wrap {margin:0;}
+.btn_req {
+  display:block;width:100%;padding:13px 0 13px;
+  border:solid 1px rgba(0,0,0,.15);background-color:#B40F1F;box-sizing:border-box;padding:13px 0;border-radius:5.4px
+}
+@media only screen and (min-width: 992px) {
+  .btn_req {
+    width:150px;
+  }
+}
+.btn_text {
+  font-size:20px;font-weight:700;line-height:24px;color:#fbfbfd;letter-spacing:-.5px
+}
+
+.prc_textinput{border-radius:1px;border:1px solid #d9d9d9;border-top:1px solid #c0c0c0;font-size:13px;height:25px;padding:1px 8px}
+.prc_textinput:focus{box-shadow:inset 0 1px 2px rgba(0,0,0,.3);border:1px solid #4d90fe;outline:none}
+.label_req{font-size:13px;line-height:25px;}
+
+.preference {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  margin-bottom: 0.7em;
+}
+@media only screen and (min-width: 992px) {
+  .preference {
+    width: 20em;
+  }
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  background-color: #fbfbfd;
+  margin: 0px;
+  padding: 5px;
+}
+.flex-container > div {
+  flex: 0 1 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0.5em;
+  padding: 1em;
+  text-align: left;
+  font-size: 1em;
+
+  background: #fff;
+  box-shadow: 2px 2px 20px 0 rgba(0,0,0,0.04);
+  overflow: auto;
+}
+@media only screen and (min-width: 992px) {
+  .flex-container > div {
+    flex: 0 1 20em;
+  }
+}
+.flex-container > div:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+.flex-container > div > p {
+  font-size: 1.4em;
+}
+.flex-container > div > div {
+  font-size: 0.9em;
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+}
+.cont {
+  max-width: 100%;
+  line-height: 1.4em
+}
+
+.select {
+    padding: 0;
+}
+.select input[type=radio]{
+    display: none;
+}
+.select input[type=radio]+label{
+    display: inline-block;
+    cursor: pointer;
+    height: 24px;
+    width: 60px;
+    border: 1px solid #333;
+    line-height: 24px;
+    text-align: center;
+    font-weight:bold;
+    font-size:13px;
+}
+.select input[type=radio]+label{
+    background-color: #fff;
+    color: #333;
+}
+.select input[type=radio]:checked+label{
+    background-color: #333;
+    color: #fff;
+}
+.checks {
+    position: relative;
+    height: 20px;
+    padding: 0;
+    line-height: 20px;
+}
+.checks label {
+    font-weight:bold;
+    font-size:13px;
+    margin-right: 10px;
+    vertical-align: middle;
+}            
+.checks input[type="radio"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+.checks input[type="radio"]+label {
+    display: inline-block;
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+}
+.checks input[type="radio"]+label:before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0px;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #cacece;
+    border-radius: 100%;
+    box-shadow: none;
+}
+.checks input[type="radio"]:checked+label:before {
+    background: #333;
+    border-color: #333;
+} 
+
+.title {
+  vertical-align: middle;
+  color: #333;
+  font-size: 20px;
+  line-height: 24px;
+}
+.title:hover {
+    color: #2775c4;
+    text-decoration: underline;
+}
+
+.publicDataDesc {
+  margin: 16px 0;  
+}
+
+a {
+  text-decoration: none;
+}
+
+.flex_list {
+  display: flex;
+  justify-content: left;
+  flex-flow: row;
+  background-color: #fbfbfd;
+  margin-top: 32px;
+  padding: 16px;
+  text-align: start;
+}
+@media only screen and (min-width: 992px) {
+  .flex_list {
+    padding-left: 48px;
+  }
+}
+
+.border_box {
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  border-top: 3px solid #655bc2;
+}
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js"></script>
+
+<script>
+!function(e){"use strict";function t(e,t){if(this.createTextRange){var a=this.createTextRange();a.collapse(!0),a.moveStart("character",e),a.moveEnd("character",t-e),a.select()}else this.setSelectionRange&&(this.focus(),this.setSelectionRange(e,t))}function a(e){var t=this.value.length;if(e="start"==e.toLowerCase()?"Start":"End",document.selection){var a,i,n,l=document.selection.createRange();return a=l.duplicate(),a.expand("textedit"),a.setEndPoint("EndToEnd",l),i=a.text.length-l.text.length,n=i+l.text.length,"Start"==e?i:n}return"undefined"!=typeof this["selection"+e]&&(t=this["selection"+e]),t}var i={codes:{46:127,188:44,109:45,190:46,191:47,192:96,220:92,222:39,221:93,219:91,173:45,187:61,186:59,189:45,110:46},shifts:{96:"~",49:"!",50:"@",51:"#",52:"$",53:"%",54:"^",55:"&",56:"*",57:"(",48:")",45:"_",61:"+",91:"{",93:"}",92:"|",59:":",39:'"',44:"<",46:">",47:"?"}};e.fn.number=function(n,l,s,r){r="undefined"==typeof r?",":r,s="undefined"==typeof s?".":s,l="undefined"==typeof l?0:l;var u="\\u"+("0000"+s.charCodeAt(0).toString(16)).slice(-4),h=new RegExp("[^"+u+"0-9]","g"),o=new RegExp(u,"g");return n===!0?this.is("input:text")?this.on({"keydown.format":function(n){var u=e(this),h=u.data("numFormat"),o=n.keyCode?n.keyCode:n.which,c="",v=a.apply(this,["start"]),d=a.apply(this,["end"]),p="",f=!1;if(i.codes.hasOwnProperty(o)&&(o=i.codes[o]),!n.shiftKey&&o>=65&&90>=o?o+=32:!n.shiftKey&&o>=69&&105>=o?o-=48:n.shiftKey&&i.shifts.hasOwnProperty(o)&&(c=i.shifts[o]),""==c&&(c=String.fromCharCode(o)),8!=o&&45!=o&&127!=o&&c!=s&&!c.match(/[0-9]/)){var g=n.keyCode?n.keyCode:n.which;if(46==g||8==g||127==g||9==g||27==g||13==g||(65==g||82==g||80==g||83==g||70==g||72==g||66==g||74==g||84==g||90==g||61==g||173==g||48==g)&&(n.ctrlKey||n.metaKey)===!0||(86==g||67==g||88==g)&&(n.ctrlKey||n.metaKey)===!0||g>=35&&39>=g||g>=112&&123>=g)return;return n.preventDefault(),!1}if(0==v&&d==this.value.length?8==o?(v=d=1,this.value="",h.init=l>0?-1:0,h.c=l>0?-(l+1):0,t.apply(this,[0,0])):c==s?(v=d=1,this.value="0"+s+new Array(l+1).join("0"),h.init=l>0?1:0,h.c=l>0?-(l+1):0):45==o?(v=d=2,this.value="-0"+s+new Array(l+1).join("0"),h.init=l>0?1:0,h.c=l>0?-(l+1):0,t.apply(this,[2,2])):(h.init=l>0?-1:0,h.c=l>0?-l:0):h.c=d-this.value.length,h.isPartialSelection=v==d?!1:!0,l>0&&c==s&&v==this.value.length-l-1)h.c++,h.init=Math.max(0,h.init),n.preventDefault(),f=this.value.length+h.c;else if(45!=o||0==v&&0!=this.value.indexOf("-"))if(c==s)h.init=Math.max(0,h.init),n.preventDefault();else if(l>0&&127==o&&v==this.value.length-l-1)n.preventDefault();else if(l>0&&8==o&&v==this.value.length-l)n.preventDefault(),h.c--,f=this.value.length+h.c;else if(l>0&&127==o&&v>this.value.length-l-1){if(""===this.value)return;"0"!=this.value.slice(v,v+1)&&(p=this.value.slice(0,v)+"0"+this.value.slice(v+1),u.val(p)),n.preventDefault(),f=this.value.length+h.c}else if(l>0&&8==o&&v>this.value.length-l){if(""===this.value)return;"0"!=this.value.slice(v-1,v)&&(p=this.value.slice(0,v-1)+"0"+this.value.slice(v),u.val(p)),n.preventDefault(),h.c--,f=this.value.length+h.c}else 127==o&&this.value.slice(v,v+1)==r?n.preventDefault():8==o&&this.value.slice(v-1,v)==r?(n.preventDefault(),h.c--,f=this.value.length+h.c):l>0&&v==d&&this.value.length>l+1&&v>this.value.length-l-1&&isFinite(+c)&&!n.metaKey&&!n.ctrlKey&&!n.altKey&&1===c.length&&(p=d===this.value.length?this.value.slice(0,v-1):this.value.slice(0,v)+this.value.slice(v+1),this.value=p,f=v);else n.preventDefault();f!==!1&&t.apply(this,[f,f]),u.data("numFormat",h)},"keyup.format":function(i){var n,s=e(this),r=s.data("numFormat"),u=i.keyCode?i.keyCode:i.which,h=a.apply(this,["start"]),o=a.apply(this,["end"]);0!==h||0!==o||189!==u&&109!==u||(s.val("-"+s.val()),h=1,r.c=1-this.value.length,r.init=1,s.data("numFormat",r),n=this.value.length+r.c,t.apply(this,[n,n])),""===this.value||(48>u||u>57)&&(96>u||u>105)&&8!==u&&46!==u&&110!==u||(s.val(s.val()),l>0&&(r.init<1?(h=this.value.length-l-(r.init<0?1:0),r.c=h-this.value.length,r.init=1,s.data("numFormat",r)):h>this.value.length-l&&8!=u&&(r.c++,s.data("numFormat",r))),46!=u||r.isPartialSelection||(r.c++,s.data("numFormat",r)),n=this.value.length+r.c,t.apply(this,[n,n]))},"paste.format":function(t){var a=e(this),i=t.originalEvent,n=null;return window.clipboardData&&window.clipboardData.getData?n=window.clipboardData.getData("Text"):i.clipboardData&&i.clipboardData.getData&&(n=i.clipboardData.getData("text/plain")),a.val(n),t.preventDefault(),!1}}).each(function(){var t=e(this).data("numFormat",{c:-(l+1),decimals:l,thousands_sep:r,dec_point:s,regex_dec_num:h,regex_dec:o,init:this.value.indexOf(".")?!0:!1});""!==this.value&&t.val(t.val())}):this.each(function(){var t=e(this),a=+t.text().replace(h,"").replace(o,".");t.number(isFinite(a)?+a:0,l,s,r)}):this.text(e.number.apply(window,arguments))};var n=null,l=null;e.isPlainObject(e.valHooks.text)?(e.isFunction(e.valHooks.text.get)&&(n=e.valHooks.text.get),e.isFunction(e.valHooks.text.set)&&(l=e.valHooks.text.set)):e.valHooks.text={},e.valHooks.text.get=function(t){var a,i=e(t),l=i.data("numFormat");return l?""===t.value?"":(a=+t.value.replace(l.regex_dec_num,"").replace(l.regex_dec,"."),(0===t.value.indexOf("-")?"-":"")+(isFinite(a)?a:0)):e.isFunction(n)?n(t):void 0},e.valHooks.text.set=function(t,a){var i=e(t),n=i.data("numFormat");if(n){var s=e.number(a,n.decimals,n.dec_point,n.thousands_sep);return e.isFunction(l)?l(t,s):t.value=s}return e.isFunction(l)?l(t,a):void 0},e.number=function(e,t,a,i){i="undefined"==typeof i?"1000"!==new Number(1e3).toLocaleString()?new Number(1e3).toLocaleString().charAt(1):"":i,a="undefined"==typeof a?new Number(.1).toLocaleString().charAt(1):a,t=isFinite(+t)?Math.abs(t):0;var n="\\u"+("0000"+a.charCodeAt(0).toString(16)).slice(-4),l="\\u"+("0000"+i.charCodeAt(0).toString(16)).slice(-4);e=(e+"").replace(".",a).replace(new RegExp(l,"g"),"").replace(new RegExp(n,"g"),".").replace(new RegExp("[^0-9+-Ee.]","g"),"");var s=isFinite(+e)?+e:0,r="",u=function(e,t){return""+ +(Math.round((""+e).indexOf("e")>0?e:e+"e+"+t)+"e-"+t)};return r=(t?u(s,t):""+Math.round(s)).split("."),r[0].length>3&&(r[0]=r[0].replace(/\B(?=(?:\d{3})+(?!\d))/g,i)),(r[1]||"").length<t&&(r[1]=r[1]||"",r[1]+=new Array(t-r[1].length+1).join("0")),r.join(a)}}(jQuery);
+//# sourceMappingURL=jquery.number.min.js.map
+</script>
+
+<script>
+
+var dd;
+var zloanYm;
+
+function getRadioButtonValue(varName) {
+  const radioButtons = document.querySelectorAll('input[name=' + varName +']');
+  let selectedValue;
+  for (const radioButton of radioButtons) {
+    if (radioButton.checked) {
+      selectedValue = radioButton.value;
+      break;
+    }
+  }
+  return selectedValue;
+}        
+
+function getList() {
+
+  var board1 = document.getElementById("board1");
+  board1.innerHTML = "";
+  document.getElementById("board1").style = "background-color: #31d8d0;";
+
+/*  
+  fetch("https://hion-dev.khfc.co.kr/cor/hg-jnse-rcmd-get.jsp"
+        + "?rentGrntAmt=" + rentGrntAmt.value.replaceAll(",", "")
+        + "&addr1=" + encodeURIComponent(addr1.value)
+        + "&addr2=" + encodeURIComponent(addr2.value)
+        + "&age=" + age.value.replaceAll(",", "")
+        + "&weddStcd=" + getRadioButtonValue("weddStcd")
+        + "&myIncmAmt=" + myIncmAmt.value.replaceAll(",", "")
+        + "&myTotDebtAmt=" + myTotDebtAmt.value.replaceAll(",", "")
+        + "&sposAnnlIncmAmt=" + sposAnnlIncmAmt.value.replaceAll(",", "")
+        + "&sposDebtAmt=" + sposDebtAmt.value.replaceAll(",", "")
+        + "&ownHsCnt=" + ownHsCnt.value.replaceAll(",", "")
+        + "&chldCnt=" + chldCnt.value.replaceAll(",", "")
+
+        + "&sngpHhldYn=" + getRadioButtonValue("sngpHhldYn")
+        + "&plcyCmnrFinUseYn=" + getRadioButtonValue("plcyCmnrFinUseYn")
+        + "&petySoweSftprYn=" + getRadioButtonValue("petySoweSftprYn")
+        + "&crdtRcvrSprtYn=" + getRadioButtonValue("crdtRcvrSprtYn")
+        + "&soclCnsdCndtYn=" + getRadioButtonValue("soclCnsdCndtYn")
+        + "&dsblHhldYn=" + getRadioButtonValue("dsblHhldYn")
+        + "&ntonMrorHhldYn=" + getRadioButtonValue("ntonMrorHhldYn")
+        + "&kwrcHhldYn=" + getRadioButtonValue("kwrcHhldYn")
+        + "&mlfmYn=" + getRadioButtonValue("mlfmYn")
+
+       )
+*/
+  fetch("hg-jnse-rcmd-response.json")
+    .then(r => r.json())
+    .then(d => {
+
+        dd = d;
+        var items = d.dto.listItems;
+        
+        var rcmdCmt = document.getElementById("rcmdCmt");
+        if(items.length == 0) {
+          rcmdCmt.innerHTML = "추천 보증상품이 없습니다.";
+        } else {
+          rcmdCmt.innerHTML = items.length + " 개의 보증상품을 추천합니다.";
+        }
+        
+        items.forEach(element => {
+        
+            var e = document.createElement('div');
+            board1.append(e);
+            
+            var e1 = document.createElement('p');
+            e1.innerHTML = element.prodNm;
+            e.append(e1);
+			
+            var e20 = document.createElement('div');
+            e20.innerHTML = "추천순위: " + element.prorRnk;
+            e.append(e20);
+            
+            var e21 = document.createElement('div');
+            e21.innerHTML = "보증구분코드: " + element.grntDvcd;
+            e.append(e21);
+
+            var e22 = document.createElement('div');
+            e22.innerHTML = "보증한도금액: " + $.number(element.grntLmtAmt);
+            e.append(e22);
+
+            var e23 = document.createElement('div');
+            e23.innerHTML = "대출한도금액: " + $.number(element.loanLmtAmt);
+            e.append(e23);
+            
+            var e24 = document.createElement('div');
+            e24.className = "cont";
+            e24.innerHTML = element.cont1.replaceAll("\n", "<br>");;
+            e.append(e24);
+            
+        });
+        document.getElementById("board1").style = "background-color: #fbfbfd;";
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  document.getElementById("button1").addEventListener("click", function() {
+    getList();
+  });
+  document.getElementById("input_area").addEventListener('keydown', (e) => {
+    if(e.key == "Enter") {
+      document.getElementById("button1").click(); 
+    }
+  });
+
+  numberFormat('rentGrntAmt');
+  numberFormat('age');
+  numberFormat('myIncmAmt');
+  numberFormat('myTotDebtAmt');
+  numberFormat('sposAnnlIncmAmt');
+  numberFormat('sposDebtAmt');
+  numberFormat('ownHsCnt');
+  numberFormat('chldCnt');
+  
+  document.getElementById("rentGrntAmt").focus();
+});
+
+function numberFormat(elementId) {
+  let element = document.getElementById(elementId);
+  element.addEventListener("input", function(event) {
+    element.value = element.value.replace(/[^0-9]/g, '');
+    element.value = numberWithCommas(element.value);
+  });
+}
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+</script>
+</head>
+<body id="body1">
+
+<div id="board0" class="flex_header">
+    <div>HF 전세자금보증 추천</div>
+</div>
+
+<div class="flex_input" id="input_area">
+  <div class="preference">
+    <label for="rentGrntAmt" class="label_req">임차보증금액 (rentGrntAmt)</label>
+    <input type="text" id="rentGrntAmt" name="rentGrntAmt" maxlength="20" size="20" class="prc_textinput" style="text-align: end;">
+  </div>
+  <div class="preference">
+    <label for="addr1" class="label_req">목적물주소(광역시도) (addr1)</label>
+    <input type="text" id="addr1" name="addr1" maxlength="20" size="20" class="prc_textinput">
+  </div>
+  <div class="preference">
+    <label for="addr2" class="label_req">목적물주소(시군구) (addr2)</label>
+    <input type="text" id="addr2" name="addr2" maxlength="20" size="20" class="prc_textinput">
+  </div>
+  <div class="preference">
+    <label for="age" class="label_req">만 나이 (age)</label>
+    <input type="text" id="age" name="age" maxlength="3" size="20" class="prc_textinput" style="text-align: end;">
+  </div>
+  <div class="preference">
+    <label for="" class="label_req">결혼구분 (weddStcd)</label>
+    <div class="select">
+      <input type="radio" id="weddStcd1" name="weddStcd" value="1" checked><label for="weddStcd1">미혼</label>
+      <input type="radio" id="weddStcd2" name="weddStcd" value="2"><label for="weddStcd2">기혼</label>
+      <input type="radio" id="weddStcd3" name="weddStcd" value="3"><label for="weddStcd3">신혼</label>
+      <input type="radio" id="weddStcd4" name="weddStcd" value="4"><label for="weddStcd4">결혼예정</label>
+    </div>
+  </div>
+  <div class="preference">
+    <label for="myIncmAmt" class="label_req">본인 연소득 (myIncmAmt)</label>
+    <input type="text" id="myIncmAmt" name="myIncmAmt" minlength="4" maxlength="16" size="20" class="prc_textinput" style="text-align: end;">
+  </div>
+  <div class="preference">
+    <label for="myTotDebtAmt" class="label_req">본인 부채 (myTotDebtAmt)</label>
+    <input type="text" id="myTotDebtAmt" name="myTotDebtAmt" minlength="4" maxlength="16" size="20" class="prc_textinput" style="text-align: end;">
+  </div>
+  <div class="preference">
+    <label for="sposAnnlIncmAmt" class="label_req">배우자 연소득 (sposAnnlIncmAmt)</label>
+    <input type="text" id="sposAnnlIncmAmt" name="sposAnnlIncmAmt" minlength="4" maxlength="16" size="20" class="prc_textinput" style="text-align: end;">
+  </div>
+  <div class="preference">
+    <label for="sposDebtAmt" class="label_req">배우자 부채 (sposDebtAmt)</label>
+    <input type="text" id="sposDebtAmt" name="sposDebtAmt" minlength="4" maxlength="16" size="20" class="prc_textinput" style="text-align: end;">
+  </div>
+  <div class="preference">
+    <label for="ownHsCnt" class="label_req">주택보유수 (ownHsCnt)</label>
+    <input type="text" id="ownHsCnt" name="ownHsCnt" maxlength="3" size="20" class="prc_textinput" style="text-align: end;">
+  </div>
+  <div class="preference">
+    <label for="chldCnt" class="label_req">자녀수 (chldCnt)</label>
+    <input type="text" id="chldCnt" name="chldCnt" maxlength="3" size="20" class="prc_textinput" style="text-align: end;">
+  </div>
+  <div class="preference">
+    <label for="" class="label_req">한부모가구여부 (sngpHhldYn)</label>
+    <div class="checks">
+      <input type="radio" id="sngpHhldYnY" name="sngpHhldYn" value="Y"><label for="sngpHhldYnY">예</label>
+      <input type="radio" id="sngpHhldYnN" name="sngpHhldYn" value="N" checked><label for="sngpHhldYnN">아니오</label>
+    </div>  
+  </div>
+  <div class="preference">
+    <label for="" class="label_req">정책서민금융이용여부 (plcyCmnrFinUseYn)</label>
+    <div class="checks">
+      <input type="radio" id="plcyCmnrFinUseYnY" name="plcyCmnrFinUseYn" value="Y"><label for="plcyCmnrFinUseYnY">예</label>
+      <input type="radio" id="plcyCmnrFinUseYnN" name="plcyCmnrFinUseYn" value="N" checked><label for="plcyCmnrFinUseYnN">아니오</label>
+    </div>  
+  </div>
+  <div class="preference">
+    <label for="" class="label_req">영세자영업자여부 (petySoweSftprYn)</label>
+    <div class="checks">
+      <input type="radio" id="petySoweSftprYnY" name="petySoweSftprYn" value="Y"><label for="petySoweSftprYnY">예</label>
+      <input type="radio" id="petySoweSftprYnN" name="petySoweSftprYn" value="N" checked><label for="petySoweSftprYnN">아니오</label>
+    </div>  
+  </div>
+  <div class="preference">
+    <label for="" class="label_req">신용회복지원여부 (crdtRcvrSprtYn)</label>
+    <div class="checks">
+      <input type="radio" id="crdtRcvrSprtYnY" name="crdtRcvrSprtYn" value="Y"><label for="crdtRcvrSprtYnY">예</label>
+      <input type="radio" id="crdtRcvrSprtYnN" name="crdtRcvrSprtYn" value="N" checked><label for="crdtRcvrSprtYnN">아니오</label>
+    </div>  
+  </div>
+  <div class="preference">
+    <label for="" class="label_req">사회적배려대상자여부 (soclCnsdCndtYn)</label>
+    <div class="checks">
+      <input type="radio" id="soclCnsdCndtYnY" name="soclCnsdCndtYn" value="Y"><label for="soclCnsdCndtYnY">예</label>
+      <input type="radio" id="soclCnsdCndtYnN" name="soclCnsdCndtYn" value="N" checked><label for="soclCnsdCndtYnN">아니오</label>
+    </div>  
+  </div>
+  <div class="preference">
+    <label for="" class="label_req">장애인가구여부 (dsblHhldYn)</label>
+    <div class="checks">
+      <input type="radio" id="dsblHhldYnY" name="dsblHhldYn" value="Y"><label for="dsblHhldYnY">예</label>
+      <input type="radio" id="dsblHhldYnN" name="dsblHhldYn" value="N" checked><label for="dsblHhldYnN">아니오</label>
+    </div>  
+  </div>
+  <div class="preference">
+    <label for="" class="label_req">국가유공자가구여부 (ntonMrorHhldYn)</label>
+    <div class="checks">
+      <input type="radio" id="ntonMrorHhldYnY" name="ntonMrorHhldYn" value="Y"><label for="ntonMrorHhldYnY">예</label>
+      <input type="radio" id="ntonMrorHhldYnN" name="ntonMrorHhldYn" value="N" checked><label for="ntonMrorHhldYnN">아니오</label>
+    </div>  
+  </div>
+  <div class="preference">
+    <label for="" class="label_req">의사상자가구여부 (kwrcHhldYn)</label>
+    <div class="checks">
+      <input type="radio" id="kwrcHhldYnY" name="kwrcHhldYn" value="Y"><label for="kwrcHhldYnY">예</label>
+      <input type="radio" id="kwrcHhldYnN" name="kwrcHhldYn" value="N" checked><label for="kwrcHhldYnN">아니오</label>
+    </div>  
+  </div>
+  <div class="preference">
+    <label for="" class="label_req">다문화가정여부 (mlfmYn)</label>
+    <div class="checks">
+      <input type="radio" id="mlfmYnY" name="mlfmYn" value="Y"><label for="mlfmYnY">예</label>
+      <input type="radio" id="mlfmYnN" name="mlfmYn" value="N" checked><label for="mlfmYnN">아니오</label>
+    </div>  
+  </div>
+</div>
+
+<div class="flex_input_2">
+  <div class="btn_req_wrap">
+    <button class="btn_req" id="button1">
+      <span class="btn_text">조회</span>
+    </button>
+  </div>
+</div>
+
+<div id="board1" class="flex-container">
+</div>
+
+<div id="div1" class="flex_footer">
+  <div id="rcmdCmt">
+  전세자금보증을 추천합니다.
+  </div>
+</div>
+
+<div id="div1" class="flex_footer">
+이 웹페이지는 API와 연결되지 않은 디자인 셈플입니다.
+</div>
+
+<div id="div2" class="flex_list">
+  <dl class="border_box">
+    <dt>
+      <a href="#">
+        <span class="title">
+          한국주택금융공사_전세보증추천 오픈 API
+        </span>
+      </a>
+    </dt>
+    <dd class="publicDataDesc">
+      한국주택금융공사에서 제공하는 주택보증 상품 추천 서비스
+    </dd>
+  </dl>
+</div>
+
+</body></html>

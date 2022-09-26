@@ -310,6 +310,9 @@ a {
 <script>
 
 let dd;
+let bankNmArr = [];
+let bankAmtArr = [];
+let colorArr = [];
 
 function getRadioButtonValue(varName) {
   const radioButtons = document.querySelectorAll('input[name=' + varName +']');
@@ -351,7 +354,10 @@ function getList() {
   let board1 = document.getElementById("board1");
   board1.innerHTML = "";
   rcmdCmt.innerHTML = "";
+  $('#theChart').hide();
   items = [];
+  bankNmArr = [];
+  bankAmtArr = [];
   
   let loanYmStr = getRadioButtonValue('loanYm');
 
@@ -366,6 +372,7 @@ function getList() {
         dd = d;
         items = d.body.items;
         getCnt();
+	   let redVal = 255;
 
         items.sort(function(a, b) {
           return Number(a.avgLoanRat2) - Number(b.avgLoanRat2);
@@ -380,6 +387,9 @@ function getList() {
 		
           let e1 = document.createElement('p');
           e1.innerHTML = element.bankNm;
+		bankNmArr.push(element.bankNm);
+		colorArr.push("rgb(" + redVal +", 0, 0)");
+		redVal = redVal - 10;
           e.append(e1);
 		
           let e21 = document.createElement('div');
@@ -392,8 +402,12 @@ function getList() {
 		
           let e23 = document.createElement('div');
           e23.innerHTML = "대출실행금액: " + $.number(element.loanAmt) + " 원";
+		bankAmtArr.push(element.loanAmt);
           e.append(e23);
 	   });
+	   
+	   $('#theChart').show();
+	   drawChart();
     });
 }
 
@@ -448,6 +462,51 @@ document.addEventListener("DOMContentLoaded", function(event) {
     </button>
   </div>
 </div>
+
+
+
+
+
+<div id="theChart" class="hidden m-3 md:w-[500px] border-2 shadow-lg rounded-lg overflow-hidden">
+  <div class="py-3 px-5 bg-gray-50">The chart</div>
+  <div class="md:w-[500px]" id="chartM">
+  </div>
+</div>
+
+<!-- Required chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Chart line -->
+<script>
+function drawChart() {
+
+  chartM.innerHTML = "<canvas class='p-10' id='chartLine'></canvas>";
+
+  let labels = bankNmArr;
+  let data = {
+    labels: labels,
+    datasets: [
+      {
+        label: "My First Dataset",
+        backgroundColor: colorArr,
+        hoverOffset: 4,
+        data: bankAmtArr,
+      },
+    ],
+  };
+
+  let configLineChart = {
+    type: "pie",
+    data,
+    options: {},
+  };
+
+  var chartLine = new Chart(
+    document.getElementById("chartLine"),
+    configLineChart
+  );
+}
+</script>
 
 <div id="board1" class="flex_container">
 </div>
@@ -650,10 +709,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
           <a href="#!" class="text-gray-600">Vanilla JS</a>
         </p>
         <p class="mb-4">
-          <a href="#!" class="text-gray-600">Spring Boot</a>
+          <a href="#!" class="text-gray-600">Tailwind Elements</a>
         </p>
         <p class="mb-4">
-          <a href="#!" class="text-gray-600">Tailwind Elements</a>
+          <a href="#!" class="text-gray-600">Spring Boot</a>
         </p>
         <p>
           <a href="#!" class="text-gray-600">MySql</a>
@@ -707,7 +766,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
               d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z">
             </path>
           </svg>
-          + 82 51 663 8114
+          + 82 1688 8114
         </p>
         <p class="flex items-center justify-center md:justify-start">
           <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="print"
@@ -717,7 +776,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
               d="M448 192V77.25c0-8.49-3.37-16.62-9.37-22.63L393.37 9.37c-6-6-14.14-9.37-22.63-9.37H96C78.33 0 64 14.33 64 32v160c-35.35 0-64 28.65-64 64v112c0 8.84 7.16 16 16 16h48v96c0 17.67 14.33 32 32 32h320c17.67 0 32-14.33 32-32v-96h48c8.84 0 16-7.16 16-16V256c0-35.35-28.65-64-64-64zm-64 256H128v-96h256v96zm0-224H128V64h192v48c0 8.84 7.16 16 16 16h48v96zm48 72c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24z">
             </path>
           </svg>
-          + 82 51 663 8114
+          + 82 1688 8114
         </p>
       </div>
     </div>

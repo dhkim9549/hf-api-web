@@ -84,15 +84,50 @@ body {
 .checks input[type="radio"]:checked+label:before {
     background: #333;
     border-color: #333;
-}
+} 
 
+.flex_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  background-color: #fbfbfd;
+  margin: 0px;
+  padding: 5px;
+}
+.flex_container > div {
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
+  padding: 16px;
+  text-align: left;
+  font-size: 16px;
+
+  background: #fff;
+  box-shadow: 2px 2px 20px 0 rgba(0,0,0,0.04);
+  overflow: auto;
+}
+@media only screen and (min-width: 1024px) {
+  .flex_container > div {
+    flex-basis: 320px;
+  }
+}
+.flex_container > div:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+.flex_container > div > p {
+  font-size: 22.4px;
+}
+.flex_container > div > div {
+  font-size: 15px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js"></script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -106,8 +141,6 @@ body {
     }
   }
 </script>
-<!--link rel="stylesheet" href="output.css" />
--->
 
 <script>
 
@@ -186,10 +219,9 @@ function getList() {
 	   items.forEach((element) => {
           let e = document.createElement('div');
           board1.append(e);
-          e.setAttribute('style', 'overflow: hidden');
-          e.setAttribute('data-mdb-ripple', 'true');
-          e.setAttribute('data-mdb-ripple-color', 'primary');
-		$(e).addClass('block p-5 rounded-lg shadow-lg bg-orange-200 m-5 lg:m-2 lg:w-80');
+          e.setAttribute('style', 'overflow: hidden')
+          e.setAttribute('data-mdb-ripple', 'true')
+          e.setAttribute('data-mdb-ripple-color', 'primary')
 		
           let e1 = document.createElement('p');
           e1.innerHTML = element.bankNm;
@@ -197,7 +229,6 @@ function getList() {
 		colorArr.push("rgb(" + redVal +", 0, 0)");
 		redVal = redVal - 10;
           e.append(e1);
-		$(e1).addClass('text-2xl text-gray-800 my-5');
 		
           let e21 = document.createElement('div');
           e21.innerHTML = "대출금리: " + $.number(element.avgLoanRat2, 2) + " %";
@@ -230,15 +261,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
       document.getElementById("button1").click(); 
     }
   });
-  $('#theCard').addClass('bg-rose-200');
+  $('#button_modal').click();
 });
 
 </script>
 
 </head>
 <body id="body1" class="bg-gray-100">
-
-<div class="bg-ro-300"></div>
 
 <div id="board0" class="text-center my-10 py-10 lg:text-left lg:m-10 lg:p-10">
 	<blockquote class="text-2xl font-bold italic text-slate-900">
@@ -364,7 +393,7 @@ function drawChart2() {
 
 
 
-<div id="board1" class="lg:flex lg:flex-wrap lg:m-1">
+<div id="board1" class="flex_container">
 </div>
 
 <div id="div1" class="m-10">
@@ -397,7 +426,7 @@ function drawChart2() {
 </p>
 
 <div class="lg:flex lg:flex-wrap lg:m-1">
-	  <div id="theCard" class="block p-6 rounded-lg shadow-lg bg-red-100 lg:w-80 m-5 lg:m-2">
+	  <div class="block p-6 rounded-lg shadow-lg bg-red-100 lg:w-80 m-5 lg:m-2">
 	    <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">은행별 전세대출 금리 조회</h5>
 	    <p class="text-gray-700 text-base mb-4" style="word-break:keep-all;">
 		 은행명, 대출건수, 대출실행금액 등을 기준으로 한국주택금융공사 전세자금보증을 담보로 취급된 시중은행 대출의 고객 특성별 금리 정보 제공
@@ -612,7 +641,4 @@ function drawChart2() {
   </div>
 </footer>
 
-<!-- Tailwind Elements -->
-<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
-<!-- Tailwind Elements -->
 </body></html>

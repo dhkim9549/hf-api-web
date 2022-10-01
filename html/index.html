@@ -7,159 +7,87 @@
 
 <style>
 html {
-  font-size: 16px;
-  color: #333;
 }
 body {
-  background-color: transparent;
-  font-family: NanumGothic, 'Malgun Gothic', '맑은 고딕', Dotum, '돋움', sans-serif;
+	background-color: transparent;
+	font-family: NanumGothic, 'Malgun Gothic', '맑은 고딕', Dotum, '돋움', sans-serif;
 }
-
-.flex_header {
-  display: flex;
-  justify-content: left;
-  flex-flow: column;
-  background-color: transparent;
-  color: #fbfbfb;
-  margin: 0px;
-  padding-top: 48px;
-  padding-bottom: 32px;
-  text-align: center;
-}
-@media only screen and (min-width: 992px) {
-  .flex_header {
-    padding-left: 0px;
-    text-align: center;
-  }
-}
-.flex_header > div {
-  margin-bottom: 11px;
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.flex_footer {
-  display: flex;
-  justify-content: left;
-  flex-flow: column;
-  background-color: transparent;
-  color: #fbfbfb;
-  margin-top: 32px;
-  padding: 16px;
-  text-align: start;
-}
-@media only screen and (min-width: 992px) {
-  .flex_footer {
-    padding-left: 48px;
-  }
-}
-
-.flex_container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: start;
-  background-color: transparent;
-  margin: 0px;
-  padding: 5px;
-}
-.flex_container > a {
-  flex: 0 1 100%;
-  display: flex;
-  flex-direction: column;
-  margin: 8px;
-  padding: 16px;
-  text-align: left;
-  font-size: 16px;
-
-  background: #fff;
-  box-shadow: 2px 2px 20px 0 rgba(0,0,0,0.04);
-  overflow: auto;
-}
-@media only screen and (min-width: 992px) {
-  .flex_container > a {
-    flex: 0 1 320px;
-  }
-}
-.flex_container > a:hover {
-  box-shadow: 0 0 11px rgba(33,33,33,.2); 
-}
-.flex_container > a > p {
-  font-size: 22.4px;
-  font-weight: bold;
-  letter-spacing: -0.4px;
-}
-.flex_container > a > div {
-  font-size: 15px;
-  margin-top: 6px;
-  margin-bottom: 6px;
-}
-
-a {
-  text-decoration: none;
-  color: #333;
-}
-
 video {
-  object-fit: cover;
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -5;
+	object-fit: cover;
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -5;
 }
-
 </style>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+	theme: {
+		extend: {
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
+			},
+		}
+	}
+}
+</script>
 
 </head>
 
 <body>
 
 <div>
-  <video playsinline autoplay muted loop>
+  <video class="h-screen" playsinline autoplay muted loop>
     <source src="mp4/Waves-70796.mp4" type="video/mp4">
   </video>
 </div>
 
-<div id="board0" class="flex_header">
+<div id="board0" class="text-slate-100 text-3xl font-bold text-center m-14">
     <div>bada.ai</div>
 </div>
 
-<div id="board1" class="flex_container">
-  <a href="hf-api/hg-jnse-rcmd.html">
-    <p>HF 전세자금보증 추천</p>
+<div id="board1" class="w-full p-4 flex flex-col lg:flex-row lg:flex-wrap">
+  <a class="bg-white p-5 m-2 lg:w-96" href="hf-api/hg-jnse-rcmd.html">
+    <p class="text-slate-900 text-2xl font-bold my-4">HF 전세자금보증 추천</p>
     <div>HF OpenAPI (프로토타입)</div>
   </a>
-  <a href="hf-api/rent-loan-multi-info.html">
-    <p>은행별 전세대출 금리</p>
+  <a class="bg-white p-5 m-2 lg:w-96" href="hf-api/rent-loan-multi-info.html" class="bg-white p-5 m-2 lg:w-96">
+    <p class="text-slate-900 text-2xl font-bold my-4">은행별 전세대출 금리</p>
     <div>HF OpenAPI</div>
   </a>
-  <a href="hf-api/rent-loan-rate-info.html">
-    <p>은행별 전세대출 금리 (주별)</p>
+  <a class="bg-white p-5 m-2 lg:w-96" href="hf-api/rent-loan-rate-info.html">
+    <p class="text-slate-900 text-2xl font-bold my-4">은행별 전세대출 금리 (주별)</p>
     <div>HF OpenAPI</div>
   </a>
-  <a href="hf-api/u-loan-rate.html">
-    <p>보금자리론 대출 금리 조회</p>
+  <a class="bg-white p-5 m-2 lg:w-96" href="hf-api/u-loan-rate.html">
+    <p class="text-slate-900 text-2xl font-bold my-4">보금자리론 대출 금리 조회</p>
     <div>HF OpenAPI</div>
   </a>
-  <a href="hf-api/rg-mon-pmt-amt.html">
-    <p>주택연금 예상월지급금 조회</p>
+  <a class="bg-white p-5 m-2 lg:w-96" href="hf-api/rg-mon-pmt-amt.html">
+    <p class="text-slate-900 text-2xl font-bold my-4">주택연금 예상월지급금 조회</p>
     <div>HF OpenAPI</div>
   </a>
-  <a href="https://www.data.go.kr/tcs/dss/selectDataSetList.do?dType=API&keyword=&detailKeyword=&publicDataPk=&recmSe=&detailText=&relatedKeyword=&commaNotInData=&commaAndData=&commaOrData=&must_not=&tabId=&dataSetCoreTf=&coreDataNm=&sort=&relRadio=&orgFullName=%ED%95%9C%EA%B5%AD%EC%A3%BC%ED%83%9D%EA%B8%88%EC%9C%B5%EA%B3%B5%EC%82%AC&orgFilter=%ED%95%9C%EA%B5%AD%EC%A3%BC%ED%83%9D%EA%B8%88%EC%9C%B5%EA%B3%B5%EC%82%AC&org=%ED%95%9C%EA%B5%AD%EC%A3%BC%ED%83%9D%EA%B8%88%EC%9C%B5%EA%B3%B5%EC%82%AC&orgSearch=&currentPage=1&perPage=10&brm=&instt=&svcType=&kwrdArray=&extsn=&coreDataNmArray=&pblonsipScopeCode=" target="_blank">
-    <p>HF 오픈 API 목록</p>
+  <a class="bg-white p-5 m-2 lg:w-96" href="https://www.data.go.kr/tcs/dss/selectDataSetList.do?dType=API&keyword=&detailKeyword=&publicDataPk=&recmSe=&detailText=&relatedKeyword=&commaNotInData=&commaAndData=&commaOrData=&must_not=&tabId=&dataSetCoreTf=&coreDataNm=&sort=&relRadio=&orgFullName=%ED%95%9C%EA%B5%AD%EC%A3%BC%ED%83%9D%EA%B8%88%EC%9C%B5%EA%B3%B5%EC%82%AC&orgFilter=%ED%95%9C%EA%B5%AD%EC%A3%BC%ED%83%9D%EA%B8%88%EC%9C%B5%EA%B3%B5%EC%82%AC&org=%ED%95%9C%EA%B5%AD%EC%A3%BC%ED%83%9D%EA%B8%88%EC%9C%B5%EA%B3%B5%EC%82%AC&orgSearch=&currentPage=1&perPage=10&brm=&instt=&svcType=&kwrdArray=&extsn=&coreDataNmArray=&pblonsipScopeCode=" target="_blank">
+    <p class="text-slate-900 text-2xl font-bold my-4">HF 오픈 API 목록</p>
     <div>HF OpenAPI</div>
   </a>
-  <a href="ansim-publish">
-    <p>안심전환대출 안내페이지</p>
+  <a class="bg-white p-5 m-2 lg:w-96" href="ansim-publish">
+    <p class="text-slate-900 text-2xl font-bold my-4">안심전환대출 안내페이지</p>
     <div>테스트 웹페이지</div>
+  </a>
+  <a class="bg-white p-5 m-2 lg:w-96" href="w">
+    <p class="text-slate-900 text-2xl font-bold my-4">HF-IT wiki</p>
+    <div>wiki</div>
   </a>
 </div>
 
-<div id="div1" class="flex_footer">
-  <div id="rcmdCmt">
+<div id="div1" class="text-slate-100 m-10">
   bada.ai
-  </div>
 </div>
 
 </body></html>

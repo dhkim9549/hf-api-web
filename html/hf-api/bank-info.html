@@ -14,8 +14,28 @@ body {
 }
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js"></script>
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
 <script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(event) {
+	getAcctBal();
+});
+
+function getAcctBal() {
+	$('#acctBal').html('<br>');
+	fetch("/siseapi/sise/acctBal?p=33")
+		.then(r => r.json())
+		.then(d => {
+			console.log(d);
+			let acctBalVal = d.acctBal;
+			$('#acctBal').text($.number(acctBalVal) + '원');
+		});
+}
+</script>
 
 </head>
 
@@ -29,7 +49,7 @@ body {
 		<div class="font-bold">김동현의 통장</div>
 		<div class="text-slate-500 text-xs text-left">3333-01-2590705</div>
 	</div>
-	<div class="text-2xl font-bold text-center mt-2 mb-4">103,383,109,044원</div>
+	<div id="acctBal" class="text-2xl font-bold text-center mt-2 mb-4"></div>
 	<div class="flex justify-around">
 		<div 
 			class="grow text-sm text-center p-3"
@@ -48,8 +68,6 @@ body {
 	</div>
 </div>
 
-<!-- Tailwind Elements -->
 <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
-<!-- Tailwind Elements -->
 
 </body></html>

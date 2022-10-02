@@ -91,6 +91,7 @@ body {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js"></script>
 
+<!--
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
@@ -106,8 +107,8 @@ body {
     }
   }
 </script>
-<!--link rel="stylesheet" href="output.css" />
 -->
+<link rel="stylesheet" href="output.css" />
 
 <script>
 
@@ -189,7 +190,7 @@ function getList() {
           e.setAttribute('style', 'overflow: hidden');
           e.setAttribute('data-mdb-ripple', 'true');
           e.setAttribute('data-mdb-ripple-color', 'primary');
-		$(e).addClass('block p-5 rounded-lg shadow-lg bg-orange-200 m-5 lg:m-2 lg:w-80');
+		$(e).addClass('p-5 rounded-lg shadow-lg bg-red-200 m-5 lg:m-2 lg:w-80');
 		
           let e1 = document.createElement('p');
           e1.innerHTML = element.bankNm;
@@ -534,7 +535,7 @@ function drawChart2() {
           <a href="#!" class="text-gray-600">Vanilla JS</a>
         </p>
         <p class="mb-4">
-          <a href="#!" class="text-gray-600">Tailwind Elements</a>
+          <a href="#!" class="text-gray-600">Tailwind CSS</a>
         </p>
         <p class="mb-4">
           <a href="#!" class="text-gray-600">Spring Boot</a>

@@ -7,8 +7,6 @@
 
 <style>
 html {
-  font-size: 16px;
-  color: #333;
 }
 body {
   background-color: #fbfbfd;
@@ -91,7 +89,13 @@ body {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js"></script>
 
-<!--
+<!-- billboard.js -->
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://naver.github.io/billboard.js/release/latest/dist/billboard.min.js"></script>
+<script src="https://naver.github.io/billboard.js/release/latest/dist/billboard.pkgd.min.js"></script>
+<link rel="stylesheet" href="https://naver.github.io/billboard.js/release/latest/dist/billboard.min.css" />
+
+<!-- tailwindcss -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
@@ -107,16 +111,12 @@ body {
     }
   }
 </script>
--->
-<link rel="stylesheet" href="output.css" />
 
 <script>
 
 let dd;
-let bankNmArr = [];
-let bankAmtArr = [];
-let bankRateArr = [];
-let colorArr = [];
+let chartDataArr = [];
+let chartDataArr2 = [];
 
 function getRadioButtonValue(varName) {
   const radioButtons = document.querySelectorAll('input[name=' + varName +']');
@@ -161,9 +161,6 @@ function getList() {
   $('#theChart').hide();
   $('#theChart2').hide();
   items = [];
-  bankNmArr = [];
-  bankAmtArr = [];
-  bankRateArr = [];
   
   let loanYmStr = getRadioButtonValue('loanYm');
 
@@ -194,15 +191,12 @@ function getList() {
 		
           let e1 = document.createElement('p');
           e1.innerHTML = element.bankNm;
-		bankNmArr.push(element.bankNm);
-		colorArr.push("rgb(" + redVal +", 0, 0)");
 		redVal = redVal - 10;
           e.append(e1);
 		$(e1).addClass('text-2xl text-gray-800 my-5');
 		
           let e21 = document.createElement('div');
           e21.innerHTML = "대출금리: " + $.number(element.avgLoanRat2, 2) + " %";
-		bankRateArr.push(element.avgLoanRat2);
           e.append(e21);
 		
           let e22 = document.createElement('div');
@@ -211,8 +205,17 @@ function getList() {
 		
           let e23 = document.createElement('div');
           e23.innerHTML = "대출실행금액: " + $.number(element.loanAmt) + " 원";
-		bankAmtArr.push(element.loanAmt);
           e.append(e23);
+
+		let elementDataArr = [];
+		elementDataArr.push(element.bankNm);
+		elementDataArr.push(element.loanAmt);
+		chartDataArr.push(elementDataArr);
+
+		let elementDataArr2 = [];
+		elementDataArr2.push(element.bankNm);
+		elementDataArr2.push(element.avgLoanRat2);
+		chartDataArr2.push(elementDataArr2);
 	   });
 	   
 	   $('#theChart').show();
@@ -279,89 +282,50 @@ document.addEventListener("DOMContentLoaded", function(event) {
 <div class="lg:flex">
 	<div id="theChart" class="hidden m-3 md:w-[500px] border-2 shadow-lg rounded-lg overflow-hidden">
 		<div class="py-3 px-5 bg-gray-50">대출실행금액</div>
-		<div class="md:w-[500px]" id="chartM"></div>
+		<div class="md:w-[500px] h-[500px]" id="pieChart"></div>
 	</div>
 
 	<div id="theChart2" class="hidden m-3 md:w-[500px] border-2 shadow-lg rounded-lg overflow-hidden">
 		<div class="py-3 px-5 bg-gray-50">대출금리</div>
-		<div class="md:w-[500px]" id="chartM2"></div>
+		<div class="md:w-[500px] h-[500px]" id="barChart"></div>
 	</div>
 </div>
 
-<!-- Required chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<!-- Chart line -->
 <script>
 function drawChart() {
-
-  chartM.innerHTML = "<canvas class='p-10' id='chartLine'></canvas>";
-
-  let labels = bankNmArr;
-  let data = {
-    labels: labels,
-    datasets: [
-      {
-        label: "My First Dataset",
-        backgroundColor: colorArr,
-        hoverOffset: 4,
-        data: bankAmtArr,
-      },
-    ],
-  };
-
-  let configLineChart = {
-    type: "pie",
-    data,
-    options: {},
-  };
-
-  var chartLine = new Chart(
-    document.getElementById("chartLine"),
-    configLineChart
-  );
+	var chart = bb.generate({
+	  data: {
+	    columns: chartDataArr,
+	    type: "pie", // for ESM specify as: pie()
+	    onclick: function(d, i) {
+		console.log("onclick", d, i);
+	   },
+	    onover: function(d, i) {
+		console.log("onover", d, i);
+	   },
+	    onout: function(d, i) {
+		console.log("onout", d, i);
+	   }
+	  },
+	  bindto: "#pieChart"
+	});
 }
-</script>
 
-<!-- Chart bar -->
-<script>
 function drawChart2() {
-
-  chartM2.innerHTML = "<canvas class='p-10' height=400 id='chartBar'></canvas>";
-  
-  const labelsBarChart = bankNmArr;
-  const dataBarChart = {
-    labels: labelsBarChart,
-    datasets: [
-      {
-        label: "대출금리",
-        backgroundColor: "hsl(252, 82.9%, 67.8%)",
-        borderColor: "hsl(252, 82.9%, 67.8%)",
-        data: bankRateArr,
-	   indexAxis: 'y',
-      },
-    ],
-  };
-
-  const configBarChart = {
-    type: "bar",
-    data: dataBarChart,
-    options: {},
-  };
-
-  var chartBar = new Chart(
-    document.getElementById("chartBar"),
-    configBarChart
-  );
+	var chart2 = bb.generate({
+	  data: {
+	    columns: chartDataArr2,
+	    type: "bar", // for ESM specify as: bar()
+	  },
+	  bar: {
+	    width: {
+		 ratio: 0.9
+	    }
+	  },
+	  bindto: "#barChart"
+	});
 }
 </script>
-
-
-
-
-
-
-
 
 
 

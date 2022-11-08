@@ -93,9 +93,6 @@ body {
 <script src="https://d3js.org/d3.v6.min.js"></script>
 <script src="https://naver.github.io/billboard.js/release/latest/dist/billboard.min.js"></script>
 <script src="https://naver.github.io/billboard.js/release/latest/dist/billboard.pkgd.min.js"></script>
-<!-- 
-<link rel="stylesheet" href="https://naver.github.io/billboard.js/release/latest/dist/billboard.min.css" />
--->
 <link rel="stylesheet" href="https://naver.github.io/billboard.js/release/latest/dist/theme/datalab.min.css" />
 
 <!-- tailwindcss -->
@@ -104,15 +101,15 @@ body {
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: {
-          sans: ['Inter', 'sans-serif'],
-        },
-      }
-    }
-  }
+tailwind.config = {
+	theme: {
+		extend: {
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
+			},
+		}
+	}
+}
 </script>
 
 <script>
@@ -121,132 +118,126 @@ let chartDataArr = [];
 let chartDataArr2 = [];
 
 function getRadioButtonValue(varName) {
-  const radioButtons = document.querySelectorAll('input[name=' + varName +']');
-  let selectedValue;
-  for (const radioButton of radioButtons) {
-    if (radioButton.checked) {
-      selectedValue = radioButton.value;
-      break;
-    }
-  }
-  return selectedValue;
+	const radioButtons = document.querySelectorAll('input[name=' + varName +']');
+	let selectedValue;
+	for (const radioButton of radioButtons) {
+		if (radioButton.checked) {
+			selectedValue = radioButton.value;
+			break;
+		}
+	}
+	return selectedValue;
 }
 
 function getCnt() {
-
-   let rcmdCmt = document.getElementById("rcmdCmt");
-   if(items.length == 0) {
-     rcmdCmt.innerHTML = "조회 결과가 없습니다.";
-   } else {
-     rcmdCmt.innerHTML = items.length + " 건이 조회되었습니다.";
-   }
+	let rcmdCmt = document.getElementById("rcmdCmt");
+	if(items.length == 0) {
+		rcmdCmt.innerHTML = "조회 결과가 없습니다.";
+	} else {
+		rcmdCmt.innerHTML = items.length + " 건이 조회되었습니다.";
+	}
 }
 
 let apiStr = ""
-     + "?serviceKey=PW2VvwTvkcs%2FWMVLduXzeRL0BPjOYH%2B0wMnsQiyy5UgcrukEjAurATJUNkeA7T%2Bj47s3GAmLzHduip%2BfbxESlQ%3D%3D"
-     + "&pageNo=1"
-     + "&numOfRows=30"
-     + "&dataType=JSON"
+	+ "?serviceKey=PW2VvwTvkcs%2FWMVLduXzeRL0BPjOYH%2B0wMnsQiyy5UgcrukEjAurATJUNkeA7T%2Bj47s3GAmLzHduip%2BfbxESlQ%3D%3D"
+	+ "&pageNo=1"
+	+ "&numOfRows=30"
+	+ "&dataType=JSON"
 	;
 
 let items = [];
 
 function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function getList() {
 
-  let board1 = document.getElementById("board1");
-  let loanYmStr = getRadioButtonValue('loanYm');
+	let board1 = document.getElementById("board1");
+	let loanYmStr = getRadioButtonValue('loanYm');
 
-// http://apis.data.go.kr/B551408/rent-loan-rate-multi-dimensional-info/dimensional-list?serviceKey=PW2VvwTvkcs%2FWMVLduXzeRL0BPjOYH%2B0wMnsQiyy5UgcrukEjAurATJUNkeA7T%2Bj47s3GAmLzHduip%2BfbxESlQ%3D%3D&pageNo=1&numOfRows=30&dataType=JSON&loanYm=L1M  
-  fetch("http://apis.data.go.kr/B551408/rent-loan-rate-multi-dimensional-info/dimensional-list"
-     + apiStr
-     + "&loanYm=" + loanYmStr
-     )
-    .then(r => r.json())
-    .then(d => {
+	fetch("http://apis.data.go.kr/B551408/rent-loan-rate-multi-dimensional-info/dimensional-list"
+		+ apiStr
+		+ "&loanYm=" + loanYmStr
+	)
+	.then(r => r.json())
+	.then(d => {
 
-        board1.innerHTML = "";
-        rcmdCmt.innerHTML = "";
-        $('#theChart').hide();
-        $('#theChart2').hide();
-        items = [];
+		board1.innerHTML = "";
+		rcmdCmt.innerHTML = "";
+		$('#theChart').hide();
+		$('#theChart2').hide();
+		items = [];
 
-        dd = d;
-        items = d.body.items;
-        getCnt();
-	   let redVal = 255;
-	   chartDataArr = [];
-	   chartDataArr2 = [];
+		dd = d;
+		items = d.body.items;
+		getCnt();
+		chartDataArr = [];
+		chartDataArr2 = [];
 
-        items.sort(function(a, b) {
-          return Number(a.avgLoanRat2) - Number(b.avgLoanRat2);
-        });
+		items.sort(function(a, b) {
+			return Number(a.avgLoanRat2) - Number(b.avgLoanRat2);
+		});
 	   
-	   items.forEach((element) => {
-          let e = document.createElement('div');
-          board1.append(e);
-          e.setAttribute('style', 'overflow: hidden');
-          e.setAttribute('data-mdb-ripple', 'true');
-          e.setAttribute('data-mdb-ripple-color', 'primary');
-		$(e).addClass('p-5 shadow-lg m-5 lg:m-2 lg:w-80');
+		items.forEach((element) => {
+			let e = document.createElement('div');
+			board1.append(e);
+			e.setAttribute('style', 'overflow: hidden');
+			e.setAttribute('data-mdb-ripple', 'true');
+			e.setAttribute('data-mdb-ripple-color', 'primary');
+			$(e).addClass('p-5 shadow-lg m-5 lg:m-2 lg:w-80 bg-gray-50');
 		
-          let e1 = document.createElement('p');
-          e1.innerHTML = element.bankNm;
-		redVal = redVal - 10;
-          e.append(e1);
-		$(e1).addClass('text-2xl text-slate-800 my-5');
+			let e1 = document.createElement('p');
+			e1.innerHTML = element.bankNm;
+			e.append(e1);
+			$(e1).addClass('text-2xl text-slate-800 my-5');
 		
-          let e21 = document.createElement('div');
-          e21.innerHTML = "대출금리: " + $.number(element.avgLoanRat2, 2) + " %";
-          e.append(e21);
+			let e21 = document.createElement('div');
+			e21.innerHTML = "대출금리: " + $.number(element.avgLoanRat2, 2) + " %";
+			e.append(e21);
 		
-          let e22 = document.createElement('div');
-          e22.innerHTML = "대출실행건수: " + $.number(element.cnt);
-          e.append(e22);
+			let e22 = document.createElement('div');
+			e22.innerHTML = "대출실행건수: " + $.number(element.cnt);
+			e.append(e22);
 		
-          let e23 = document.createElement('div');
-          e23.innerHTML = "대출실행금액: " + $.number(element.loanAmt) + " 원";
-          e.append(e23);
+			let e23 = document.createElement('div');
+			e23.innerHTML = "대출실행금액: " + $.number(element.loanAmt) + " 원";
+			e.append(e23);
 
-		let elementDataArr = [];
-		elementDataArr.push(element.bankNm);
-		elementDataArr.push(element.loanAmt);
-		chartDataArr.push(elementDataArr);
+			let elementDataArr = [];
+			elementDataArr.push(element.bankNm);
+			elementDataArr.push(element.loanAmt);
+			chartDataArr.push(elementDataArr);
 
-		let elementDataArr2 = [];
-		elementDataArr2.push(element.bankNm);
-		elementDataArr2.push(element.avgLoanRat2);
-		chartDataArr2.push(elementDataArr2);
-	   });
+			let elementDataArr2 = [];
+			elementDataArr2.push(element.bankNm);
+			elementDataArr2.push(element.avgLoanRat2);
+			chartDataArr2.push(elementDataArr2);
+		});
 	   
-	   $('#theChart').show();
-	   $('#theChart2').show();
-	   drawChart();
-	   drawChart2();
-    });
+		$('#theChart').show();
+		$('#theChart2').show();
+		drawChart();
+		drawChart2();
+	});
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {
-  document.getElementById("button1").addEventListener("click", function() {
-    getList();
-  });
-  document.getElementById("input_area").addEventListener('keydown', (e) => {
-    if(e.key == "Enter") {
-      document.getElementById("button1").click(); 
-    }
-  });
-  $('#theCard').addClass('bg-rose-200');
+	document.getElementById("button1").addEventListener("click", function() {
+		getList();
+	});
+	document.getElementById("input_area").addEventListener('keydown', (e) => {
+	if(e.key == "Enter") {
+		document.getElementById("button1").click(); 
+	}
+	});
+	$('#theCard').addClass('bg-rose-200');
 });
 
 </script>
 
 </head>
 <body id="body1" class="bg-gray-100">
-
-<div class="bg-ro-300"></div>
 
 <div id="board0" class="text-center my-10 py-10 lg:text-left lg:m-10 lg:p-10">
 	<blockquote class="text-2xl font-bold italic text-slate-900">
@@ -255,8 +246,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			<span class="relative text-white">전세대출</span>
 		</span>
 		금리 조회
-		</blockquote>
-	</div>
+	</blockquote>
 </div>
 
 <div class="m-4 p-8 bg-white rounded-lg" id="input_area">
@@ -298,63 +288,61 @@ document.addEventListener("DOMContentLoaded", function(event) {
 <script>
 function drawChart() {
 	var chart = bb.generate({
-	  data: {
-	    columns: chartDataArr,
-	    type: "pie", // for ESM specify as: pie()
-	    onclick: function(d, i) {
-		console.log("onclick", d, i);
-	   },
-	    onover: function(d, i) {
-		console.log("onover", d, i);
-	   },
-	    onout: function(d, i) {
-		console.log("onout", d, i);
-	   }
-	  },
-	  bindto: "#pieChart"
+		data: {
+			columns: chartDataArr,
+			type: "pie", // for ESM specify as: pie()
+			onclick: function(d, i) {
+			console.log("onclick", d, i);
+			},
+			onover: function(d, i) {
+				console.log("onover", d, i);
+			},
+			onout: function(d, i) {
+				console.log("onout", d, i);
+			}
+		},
+		bindto: "#pieChart"
 	});
 }
 
 function drawChart2() {
 	var chart2 = bb.generate({
-	  data: {
-	    columns: chartDataArr2,
-	    type: "bar", // for ESM specify as: bar()
-	  },
-	  bar: {
-	    width: {
-		 ratio: 0.9
-	    }
-	  },
-	  bindto: "#barChart"
+		data: {
+			columns: chartDataArr2,
+			type: "bar", // for ESM specify as: bar()
+		},
+		bar: {
+			width: {
+				ratio: 0.9
+			}
+		},
+		bindto: "#barChart"
 	});
 }
 </script>
-
-
 
 <div id="board1" class="lg:flex lg:flex-wrap lg:m-1">
 </div>
 
 <div id="div1" class="m-10">
-  <div id="rcmdCmt">
-  은행별 전세대출 금리를 조회합니다.
-  </div>
+	<div id="rcmdCmt">
+	은행별 전세대출 금리를 조회합니다.
+	</div>
 </div>
 
 <div id="div2" class="m-10">
-  <dl class="p-4" style="border: 1px solid #e0e0e0; border-top: 3px solid #655bc2;">
-    <dt>
-      <a href="https://www.data.go.kr/data/15082044/openapi.do" target="_blank">
-        <span class="text-xl text-slate-800 font-medium">
-          한국주택금융공사_전세자금대출 고객 특성별 금리 정보
-        </span>
-      </a>
-    </dt>
-    <dd class="mt-2">
-      은행명, 대출건수, 대출실행금액 등을 기준으로 한국주택금융공사 전세자금보증을 담보로 취급된 시중은행 대출의 고객 특성별 금리 정보 제공
-    </dd>
-  </dl>
+	<dl class="p-4" style="border: 1px solid #e0e0e0; border-top: 3px solid #655bc2;">
+		<dt>
+			<a href="https://www.data.go.kr/data/15082044/openapi.do" target="_blank">
+				<span class="text-xl text-slate-800 font-medium">
+					한국주택금융공사_전세자금대출 고객 특성별 금리 정보
+				</span>
+			</a>
+		</dt>
+		<dd class="mt-2">
+			은행명, 대출건수, 대출실행금액 등을 기준으로 한국주택금융공사 전세자금보증을 담보로 취급된 시중은행 대출의 고객 특성별 금리 정보 제공
+		</dd>
+	</dl>
 </div>
 
 <!-- Tailwind Elements -->

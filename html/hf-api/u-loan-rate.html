@@ -197,15 +197,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	</button>
 </div>
 
-<div id="board1" class="lg:flex lg:flex-wrap lg:m-1">
-</div>
+<div class="flex flex-col lg:flex-row">
+	<div class="lg:flex">
+		<div id="theChart2" class="hidden m-3 md:w-[500px] border-2 shadow-lg rounded-lg overflow-hidden">
+			<div class="py-3 px-5 bg-gray-50">대출금리</div>
+			<div class="md:w-[500px] h-[500px]" id="barChart"></div>
+		</div>
+	</div>
 
-<div class="lg:flex">
-	<div id="theChart2" class="hidden m-3 md:w-[500px] border-2 shadow-lg rounded-lg overflow-hidden">
-		<div class="py-3 px-5 bg-gray-50">대출금리</div>
-		<div class="md:w-[500px] h-[500px]" id="barChart"></div>
+	<div id="board1" class="flex flex-col lg:flex-row lg:flex-wrap lg:m-1">
 	</div>
 </div>
+
 
 <script>
 function drawChart2() {
@@ -226,8 +229,18 @@ function drawChart2() {
 		},
 		axis: {
 			x: {
-				type: "category"
-			}
+				type: "category",
+				label: {
+					text: "만기(연)",
+					position: "outer-center"
+				}
+			},
+			y: {
+				label: {
+					text: "금리(%)",
+					position: "outer-middle"
+				}
+			},
 		},
 		bindto: "#barChart"
 	});

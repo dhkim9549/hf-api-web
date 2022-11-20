@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>적격대출 금리 조회</title>
+
+<style>
+html {
+}
+body {
+	  background-color: #fbfbfd;
+	  font-family: NanumGothic, 'Malgun Gothic', '맑은 고딕', Dotum, '돋움', sans-serif;
+}
+
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js"></script>
+
+<!-- billboard.js -->
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://naver.github.io/billboard.js/release/latest/dist/billboard.min.js"></script>
+<script src="https://naver.github.io/billboard.js/release/latest/dist/billboard.pkgd.min.js"></script>
+<link rel="stylesheet" href="https://naver.github.io/billboard.js/release/latest/dist/theme/datalab.min.css" />
+
+<!-- tailwindcss -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+	theme: {
+		extend: {
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
+			},
+		}
+	}
+}
+</script>
+
+<script>
+
+let dd;
+
+function getRadioButtonValue(varName) {
+  const radioButtons = document.querySelectorAll('input[name=' + varName +']');
+  let selectedValue;
+  for (const radioButton of radioButtons) {
+    if (radioButton.checked) {
+      selectedValue = radioButton.value;
+      break;
+    }
+  }
+  return selectedValue;
+}
+
+function getCnt() {
+
+   let rcmdCmt = document.getElementById("rcmdCmt");
+   if(items.length == 0) {
+     rcmdCmt.innerHTML = "조회 결과가 없습니다.";
+   } else {
+     rcmdCmt.innerHTML = items.length + " 건이 조회되었습니다.";
+   }
+}
+
+let apiStr = ""
+     + "?serviceKey=PW2VvwTvkcs%2FWMVLduXzeRL0BPjOYH%2B0wMnsQiyy5UgcrukEjAurATJUNkeA7T%2Bj47s3GAmLzHduip%2BfbxESlQ%3D%3D"
+     + "&pageNo=1"
+     + "&numOfRows=30"
+     + "&dataType=JSON"
+	;
+
+let items = [];
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function formatDate(str) {
+	return str.substr(0, 4) + "-" + str.substr(4, 2) + "-" + str.substr(6, 2);
+}
+
+function getList() {
+
+	let board1 = document.getElementById("board1");
+	board1.innerHTML = "";
+	rcmdCmt.innerHTML = "";
+	items = [];
+  
+	fetch("http://apis.data.go.kr/B551408/conforming-loan-rate/conforming-list"
+		+ apiStr
+	)
+	.then(r => r.json())
+	.then(d => {
+	
+		board1.innerHTML = "";
+		rcmdCmt.innerHTML = "";
+		items = [];
+		
+		dd = d;
+		items = d.body.items;
+
+		items = items.filter(item => item.applyDy.localeCompare("20220101") > 0);
+		
+		items.sort(function(a, b) {
+			return Number(a.interest_10y) - Number(b.interest_10y);
+		});
+	   
+		getCnt();
+		
+		items.forEach((element) => {
+			let e = document.createElement('div');
+			board1.append(e);
+			e.setAttribute('style', 'overflow: hidden');
+			e.setAttribute('data-mdb-ripple', 'true');
+			e.setAttribute('data-mdb-ripple-color', 'primary');
+			$(e).addClass('p-5 shadow-lg m-5 lg:m-2 lg:w-80 bg-gray-50');
+			
+			let e1 = document.createElement('p');
+			e1.innerHTML = element.orgNm + " " + element.prodType;
+			e.append(e1);
+			$(e1).addClass('text-2xl text-slate-800 my-5');
+
+			let e20 = document.createElement('div');
+			e20.innerHTML = "금리적용일: " + formatDate(element.applyDy);
+			e.append(e20);
+
+			let e21 = document.createElement('div');
+			e21.innerHTML = "10년: " + $.number(element.interest_10y, 2) + " %";
+			e.append(e21);
+			
+			let e22 = document.createElement('div');
+			e22.innerHTML = "15년: " + $.number(element.interest_15y, 2) + " %";
+			e.append(e22);
+			
+			let e23 = document.createElement('div');
+			e23.innerHTML = "20년: " + $.number(element.interest_20y, 2) + " %";
+			e.append(e23);
+
+			let e24 = document.createElement('div');
+			e24.innerHTML = "30년: " + $.number(element.interest_30y, 2) + " %";
+			e.append(e24);
+		});
+	});
+}
+
+document.addEventListener("DOMContentLoaded", function(event) {
+	document.getElementById("button1").addEventListener("click", function() {
+		getList();
+	});
+	document.getElementById("input_area").addEventListener('keydown', (e) => {
+		if(e.key == "Enter") {
+			document.getElementById("button1").click(); 
+		}
+	});
+});
+
+</script>
+</head>
+<body id="body1" class="bg-gray-100">
+
+<div id="board0" class="text-center my-10 py-10 lg:text-left lg:m-10 lg:p-10">
+	<blockquote class="text-2xl font-bold italic text-slate-900">
+		적격대출
+		<span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block">
+			<span class="relative text-white">금리</span>
+		</span>
+		조회
+	</blockquote>
+</div>
+
+<div class="flex_input" id="input_area">
+</div>
+
+<div class="mx-8 lg:mx-20 my-8">
+	<button 
+		type="button"
+		data-mdb-ripple="true"
+		data-mdb-ripple-color="light"
+		class="
+			w-full lg:w-36 py-3 
+			rounded-lg bg-red-700 
+			text-white text-xl font-semibold shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+		id="button1">
+		<span>조회</span>
+	</button>
+</div>
+
+<div id="board1" class="flex flex-col lg:flex-row lg:flex-wrap lg:m-1">
+</div>
+
+<div id="div1" class="m-10">
+	<div id="rcmdCmt">
+	적격대출 금리를 조회합니다.
+	</div>
+</div>
+
+<div id="div2" class="m-10">
+	<dl class="p-4" style="border: 1px solid #e0e0e0; border-top: 3px solid #655bc2;">
+		<dt>
+			<a href="https://www.data.go.kr/data/15082047/openapi.do" target="_blank">
+			<span class="text-xl text-slate-800 font-medium">
+				한국주택금융공사_적격대출금리정보
+			</span>
+			</a>
+		</dt>
+		<dd class="mt-2">
+			한국주택금융공사에서 지원하는 디딤돌 대출에 대한 금리 적용일, 10년 대출금리, 15년 대출금리, 20년 대출금리 등의 정보를 조회하기 위한 서비스
+		</dd>
+	</dl>
+</div>
+
+<!-- Tailwind Elements -->
+<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+<!-- Tailwind Elements -->
+</body></html>

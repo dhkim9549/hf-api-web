@@ -76,7 +76,7 @@ let apiStr = ""
 
 let items = [];
 let xAxisArr = ['x'];
-let elementDataArr2 = ['가중평균발행출금리'];
+let elementDataArr2 = ['가중평균발행금리'];
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -127,8 +127,10 @@ function getList() {
 			e22.innerHTML = "발행일자: " + formatDate(element.issueDate);
 			e.append(e22);
 
+			// xAxisArr.push(element.poolName);
 			xAxisArr.splice(1, 0, element.poolName);
-			elementDataArr2.push(element.wvTotal);
+			// elementDataArr2.push(element.wvTotal);
+			elementDataArr2.splice(1, 0, element.wvTotal);
 		});
 
 		$('#theChart2').show();

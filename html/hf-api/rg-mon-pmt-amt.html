@@ -570,7 +570,7 @@ function delay(time) {
 function drawChart2(element, amt1, dur, amt2, payDvcd) {
 	
 	let chartDataArr2 = [];
-	chartDataArr2.push('예상월지급금');
+	chartDataArr2.push('예상월지급금 (단위: 만 원)');
 	chartDataArr2.push(0);
 	for(let i = 1; i <= 30; i++) {
 		if(payDvcd == 31) { // 정기증하경
@@ -594,6 +594,14 @@ function drawChart2(element, amt1, dur, amt2, payDvcd) {
 			width: {
 				ratio: 0.9
 			}
+		},
+		axis: {
+			x: {
+				label: {
+					text: "지급년도",
+					position: "outer-center"
+				}
+			},
 		},
 		bindto: element
 	});
